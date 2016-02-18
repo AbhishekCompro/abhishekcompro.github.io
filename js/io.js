@@ -46,6 +46,7 @@ var taskData = {
     id: '',
     name:'',
     description: '',
+    appName:'',
     items:[
         {
             init:false,
@@ -94,6 +95,7 @@ var taskDataRaw = {
     id: '',
     name:'',
     description: '',
+    appName:'',
     items:[
         {
             init:false,
@@ -165,6 +167,23 @@ var initCurrentTaskData = function(callback){
     taskData.name = $('#inputTaskName').val();
     taskData.description = $('#taskDescription').val();
     taskData.init = true;
+
+    var appName = '';
+
+    if((taskData.id.toLowerCase()).indexOf('.xl') != -1){
+        appName = 'excel';
+    }
+    else if((taskData.id.toLowerCase()).indexOf('.pp') != -1){
+        appName = 'ppt';
+    }
+    else if((taskData.id.toLowerCase()).indexOf('.ac') != -1){
+        appName = 'access';
+    }
+    else if((taskData.id.toLowerCase()).indexOf('.wd') != -1){
+        appName = 'word';
+    }
+
+    taskData.appName = appName;
 
     console.log('console.log(taskData.name) ' + taskData.name);
     localStorage.setItem('taskData', JSON.stringify(taskData));

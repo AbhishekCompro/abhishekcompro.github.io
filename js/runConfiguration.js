@@ -210,9 +210,10 @@ var getdistJava = function(){
     }
     // todo - update to current app name
     var preJ = 'package sims.testcase.' +
-        'access' +
+        taskData.appName +
         ';    import org.testng.annotations.Test;    import sims.testcase.SimsBase;    public class Test_' +
-        (taskData.id.replace(new RegExp('.', 'g'), '_')).trim()
+        ((taskData.id).replace(/\./gi, "_")).trim()
+
         +
         '_' +
         taskData.scenario.toUpperCase().trim()
@@ -230,7 +231,7 @@ var getdistJava = function(){
             '@Test (groups = {' +
             '"Acceptance", "Primary"' + //todo: change this
             '})        public void ' +
-            (taskData.id.replace(new RegExp('.', 'g'), '_')).trim()
+            ((taskData.id).replace(/\./gi, "_")).trim()
             +
             '_' +
             (taskData.scenario.toUpperCase()).trim() + (++testCount).toString()
@@ -274,18 +275,24 @@ var getdistJava = function(){
 };
 
 $("#runTaskOnServer").click(function(){
+
     var prettyRunXML = updateRunXml();
     var prettyRunJava = getdistJava();  //todo: change this
 
     var distXML = getdistXML();
     var distJava = getdistJava();
 
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
+
+    var javaFilename =    'Test_' +   (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.java';
+    var xmlFilename =    (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.xml';
+
     console.log('prettyRunJava: ' + prettyRunJava);
 
     window.open ("http://localhost:3000/testrun",",","menubar=1,resizable=1,width=1024,height=800");
 
     setTimeout(function(){
-        $.post("http://localhost:3000/testrun",{xmlFilename:'',xmldata: prettyRunXML,javaFilename:'',javadata: prettyRunJava, distXML: distXML, distJava:distJava}, function(data){
+        $.post("http://localhost:3000/testrun",{xmlFilename:xmlFilename,xmldata: prettyRunXML,javaFilename:javaFilename,javadata: prettyRunJava, distXML: distXML, distJava:distJava}, function(data){
             if(data==='done')
             {
                 console.log("post success");

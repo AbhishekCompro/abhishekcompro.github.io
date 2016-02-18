@@ -1,6 +1,10 @@
 var express   =     require("express");
 var bodyParser  =    require("body-parser");
 var app       =     express();
+var JsonDB = require('node-json-db');
+var db = new JsonDB("myDataBase", true, true);
+var fs = require("fs");
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(__dirname + '/static'));
 
@@ -29,12 +33,42 @@ app.post('/testrun',function(req,res){
   res.sendfile("index.html");
   var xmldata=req.body.xmldata;
   console.log("inside test run " + xmldata);
-  //res.end("yes. " + "xml: "+req.query.xml+" java: "+req.query.java);
+
+  var javadata=req.body.javadata;
+  console.log("inside test run " + javadata);
+
+  var xmlFilename = req.body.xmlFilename;
+  var javaFilename = req.body.javaFilename;
+  console.log("inside test run xmlFilename " + xmlFilename);
+  console.log("inside test run javaFilename " + javaFilename);
+try{
+  db.push("/xmldata",xmldata,false);
+  db.push("/javadata",javadata,false);
+  db.push("/xmlFilename",xmlFilename,false);
+  db.push("/javaFilename",javaFilename,false);
+}catch(err){
+  console.log('error in db push: ' + err)
+}
+
 });
 
 app.get('/renderContent',function(req,res){
   console.log("inside render content");
-  res.end("yes.");
+  var xmldata ='';
+  var javadata ='';
+  var xmlFilename ='' ;
+  var javaFilename ='';
+try{
+  xmldata = db.getData("/xmldata");
+  javadata = db.getData("/javadata");
+  xmlFilename = db.getData("/xmlFilename");
+  javaFilename = db.getData("/javaFilename");
+
+}catch(err){
+  console.log(err)
+}
+  res.send({xmldata:xmldata,javadata:javadata,xmlFilename:xmlFilename,javaFilename:javaFilename});
+  res.end();
 });
 
 
@@ -50,7 +84,19 @@ app.get('/killTest',function(req,res){
 
 app.get('/generateTestFiles',function(req,res){
   console.log("inside generate files");
-  res.end("yes.");
+
+  var path = "s:\\Test.txt";
+  var data = "Hello from the Node writeFile method! 2";
+
+  fs.writeFile(path, data, function(error) {
+    if (error) {
+      console.error("write error:  " + error.message);
+    } else {
+      console.log("Successful Write to " + path);
+    }
+  });
+
+  res.end("file write success.");
 });
 
 app.get('/generateFiles',function(req,res){

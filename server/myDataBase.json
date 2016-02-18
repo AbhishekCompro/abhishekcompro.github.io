@@ -1,0 +1,6 @@
+{
+    "xmldata": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Task id=\"eeer\" name=\"\">\n    <description></description>\n    <friendlyTaskID>eeerT1</friendlyTaskID>\n    <scenario name=\"T1\">\n        <Items count=\"0\"></Items>\n    </scenario>\n</Task>",
+    "javadata": "package sims.testcase.;\nimport org.testng.annotations.Test;\nimport sims.testcase.SimsBase;\npublic class Test_eeer_T1 extends SimsBase {@Test(groups = {\n        \"Acceptance\", \"Primary\"\n    }) public void eeer_T11() throws Exception {\n        System.out.println(\"START..\");\n        Thread.sleep(3000);\n        System.out.println(\"DONE.\");\n    }\n}",
+    "xmlFilename": "eeer_T1.xml",
+    "javaFilename": "Test_eeer_T1.java"
+}
