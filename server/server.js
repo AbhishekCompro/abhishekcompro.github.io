@@ -85,14 +85,36 @@ app.get('/killTest',function(req,res){
 app.get('/generateTestFiles',function(req,res){
   console.log("inside generate files");
 
-  var path = "s:\\Test.txt";
-  var data = "Hello from the Node writeFile method! 2";
+  var xmldata ='';
+  var javadata ='';
+  var xmlFilename ='' ;
+  var javaFilename ='';
+  try{
+    xmldata = db.getData("/xmldata");
+    javadata = db.getData("/javadata");
+    xmlFilename = db.getData("/xmlFilename");
+    javaFilename = db.getData("/javaFilename");
 
-  fs.writeFile(path, data, function(error) {
+  }catch(err){
+    console.log(err)
+  }
+
+  var xmlbasepath = "s:\\"+xmlFilename;
+  var javabasepath = "s:\\"+javaFilename;
+
+  fs.writeFile(xmlbasepath, xmldata, function(error) {
     if (error) {
       console.error("write error:  " + error.message);
     } else {
-      console.log("Successful Write to " + path);
+      console.log("Successful Write to " + xmlbasepath);
+    }
+  });
+
+  fs.writeFile(javabasepath, javadata, function(error) {
+    if (error) {
+      console.error("write error:  " + error.message);
+    } else {
+      console.log("Successful Write to " + javabasepath);
     }
   });
 
