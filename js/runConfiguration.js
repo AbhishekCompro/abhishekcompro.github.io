@@ -289,7 +289,7 @@ $("#runTaskOnServer").click(function(){
 
     console.log('prettyRunJava: ' + prettyRunJava);
 
-    window.open ("http://localhost:3000/testrun",",","menubar=1,resizable=1,width=1024,height=800");
+    window.open ("http://localhost:80/testrun",",","menubar=1,resizable=1,width=1024,height=800");
 
     setTimeout(function(){
         $.post("http://localhost:3000/testrun",{xmlFilename:xmlFilename,xmldata: prettyRunXML,javaFilename:javaFilename,javadata: prettyRunJava, distXML: distXML, distJava:distJava}, function(data){

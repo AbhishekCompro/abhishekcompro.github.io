@@ -4,3 +4,34 @@ https://github.com/processing/p5.js/wiki/Loading-external-files:-AJAX,-XML,-JSON
 
 
 https://google-code-prettify.googlecode.com/svn/trunk/README.html
+
+
+sample access task:
+
+AC Skill 2.08
+SKL16.AC.02.01.08
+Add Calculated Fields to Queries
+T1
+
+Keyboard
+Primary
+
+
+Click
+SKL16_AC_02_01_08_T1_Empty_Field
+
+enterText
+Penalty: [AmountDue]*0.25
+
+pressKey
+ENTER
+
+==================
+Ribbon
+Primary
+
+click
+SKL16_AC_02_01_08_T1_Amount_Sort
+
+click
+Ribbon_Results_Run

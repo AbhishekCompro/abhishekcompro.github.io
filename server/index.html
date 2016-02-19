@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Documentation</title>
+    <title>Qlet Admin - server</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="./dependencies/css/bootstrap.min.css">
@@ -157,7 +157,7 @@
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
-        <div class="content-header">
+        <div class="content-header" id="header-items">
 <!--          <h1>
             AdminLTE Documentation
             <small>Current version 2.3.0</small>
@@ -166,7 +166,7 @@
             <i class="fa fa-play"></i> Launch Test
           </a>
           <a class="btn btn-app">
-            <i class="fa fa-pause"></i> Stop
+            <i class="fa fa-pause" id="killTest"></i> Stop
           </a>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Server</a></li>
@@ -195,14 +195,13 @@
   </p>
 
 
-  <pre style="background-color: #353535; color: white; height: 400px" class="hierarchy bring-up"><code class="language-bash" data-lang="bash">Run Logs
+  <pre style="background-color: #353535; color: white; height: 400px" class="hierarchy bring-up"><code class="language-bash" data-lang="bash" id="run-logs">Run Logs
 
 
   </code></pre>
 
   <div class="row" id="download">
-    <!--<div class="col-sm-6">-->
-      <div class="box box-primary">
+    <!--<div class="col-sm-6">--><div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">XML</h3>
           <span class="label label-primary pull-right"><i class="fa fa-html5"></i></span>
@@ -375,11 +374,8 @@
                     </div><!-- /.row -->
                 </div><!-- /.box-body -->
                 <a class="btn btn-app">
-                    <i class="fa fa-save"></i> Save to Local
-                </a>
-                <a class="btn btn-app">
                     <span class="badge bg-teal">**</span>
-                    <i class="fa fa-inbox"></i> Commit to SVN
+                    <i class="fa fa-save"></i> Commit to SVN
                 </a>
                 <b>Note:</b> LESS files are better commented than the compiled CSS file.
                 </p>
@@ -463,5 +459,53 @@
     <script src="./dependencies/docs.js"></script>
     <script src="./dependencies/updateData.js"></script>
     <script src="./dependencies/writeFiles.js"></script>
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script>
+/*        var ab2str = function ab2str(buf) {
+            return String.fromCharCode.apply(null, new Uint16Array(buf));
+        };*/
+        var socket = io.connect('http://localhost');
+        socket.on('news', function (data) {
+            console.log(data);
+            socket.emit('my other event', { my: 'data' });
+        });
+
+        socket.on('stream', function (data) {
+//            var data = ab2str(data);
+
+//            var buff = String.fromCharCode.apply(null, new Uint16Array(data.n));
+//            console.log('buff' + buff);
+            var oldVal = document.getElementById('run-logs').innerHTML;
+            document.getElementById('run-logs').innerHTML = oldVal + data.n;
+            socket.emit( 'message', {received: 'received'} );
+        });
+
+        function updateScroll(){
+            var element = document.getElementById("run-logs");
+            element.scrollTop = element.scrollHeight;
+        }
+
+        //once a second
+        setInterval("updateScroll",1000);
+    </script>
+    <script>
+/*        var sw='run';
+        var socket = io.connect('http://localhost');
+
+        socket.on('stream', function (data) {
+            document.getElementById('run-logs').innerHTML=data.n;
+            socket.emit( 'message', {received: 'received'} );
+        });*/
+
+/*        function stop_timer() {
+            if(sw=='run') {
+                socket.emit( 'action', {todo: 'stop'} );
+                sw='stop';
+            } else {
+                socket.emit( 'action', {todo: 'run'} );
+            }
+        }*/
+    </script>
   </body>
 </html>
