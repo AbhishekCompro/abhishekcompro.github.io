@@ -170,7 +170,7 @@ app.get('/launchTest',function(req,res){
   });
 
   ls.on('exit', function (code) {
-    io.emit('stream', {n:ab2str(data)});
+    io.emit('stream', {n:ab2str(code)});
 
     console.log('child process exited with code ' + code);
   });
