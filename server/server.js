@@ -216,8 +216,8 @@ app.get('/generateTestFiles',function(req,res){
     console.log(err)
   }
 
-  var xmlbasepath = "s:\\"+xmlFilename;
-  var javabasepath = "s:\\"+javaFilename;
+  var xmlbasepath = "S:\\sims-2016-svn\\sim5office16\\src\\test\\resources\\taskXML\\SKL16\\AC\\02\\01.08.T1\\"+xmlFilename;
+  var javabasepath = "S:\\sims-2016-svn\\sim5office16\\src\\test\\java\\sims\\testcase\\access\\"+javaFilename;
 
   fs.writeFile(xmlbasepath, xmldata, function(error) {
     if (error) {

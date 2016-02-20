@@ -292,7 +292,7 @@ $("#runTaskOnServer").click(function(){
     window.open ("http://localhost",",","menubar=1,resizable=1,width=1200,height=800");
 
     setTimeout(function(){
-        $.post("http://localhost:3000/testrun",{xmlFilename:xmlFilename,xmldata: prettyRunXML,javaFilename:javaFilename,javadata: prettyRunJava, distXML: distXML, distJava:distJava}, function(data){
+        $.post("http://localhost",{xmlFilename:xmlFilename,xmldata: prettyRunXML,javaFilename:javaFilename,javadata: prettyRunJava, distXML: distXML, distJava:distJava}, function(data){
             if(data==='done')
             {
                 console.log("post success");
