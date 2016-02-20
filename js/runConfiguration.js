@@ -68,6 +68,9 @@ var updateSkipItem = function(){
             if(checkboxChecked === false){
                 taskData.items[i].skip = true;
             }
+            else{
+                taskData.items[i].skip = false;
+            }
         }
     }
 
@@ -245,23 +248,28 @@ var getdistJava = function(){
 
             if(taskData.items[i].init){
 
-                        var methodChecked = $('input[name="item'+(i+1)+'-method"]:checked', '#item'+(i+1)+'-methods').data('method');
+                if($('#run-item-'+(i+1)).is(':checked') == true){
 
-                        runJ = runJ + 'getAndPerformTask(' +
-                            '"' +
-                            taskData.id.trim() + '.' + taskData.scenario.trim() +
-                            '", ' +
-                            '"' +
-                            taskData.scenario.trim() +
-                            '", ' +
-                            '"' +
-                            (i+1).toString() +
-                            '", ' +
-                            '"' +
-                            (methodChecked).toString() +
-                            '"' +
-                            ');            ';
-                        //break;
+                    var methodChecked = $('input[name="item'+(i+1)+'-method"]:checked', '#item'+(i+1)+'-methods').data('method');
+
+                    runJ = runJ + 'getAndPerformTask(' +
+                    '"' +
+                    taskData.id.trim() + '.' + taskData.scenario.trim() +
+                    '", ' +
+                    '"' +
+                    taskData.scenario.trim() +
+                    '", ' +
+                    '"' +
+                    (i+1).toString() +
+                    '", ' +
+                    '"' +
+                    (methodChecked).toString() +
+                    '"' +
+                    ');            ';
+                    //break;
+
+                }
+
             }
             else{
 
@@ -277,6 +285,9 @@ var getdistJava = function(){
 $("#runTaskOnServer").click(function(){
 
     var prettyRunXML = updateRunXml();
+
+    //console.log('prettyRunXML');
+    //console.log(prettyRunXML);
     var prettyRunJava = getdistJava();  //todo: change this
 
     var distXML = getdistXML();
