@@ -1,4 +1,4 @@
-var express = require('express')
+var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -11,6 +11,16 @@ var db = new JsonDB("myDataBase", true, true);
 var fs = require("fs");
 
 //app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(require('connect').bodyParser());
+app.use(express.bodyParser());
+
+/*app.use(bodyParser.urlencoded());
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));*/
+
 app.use(express.static(__dirname + '/static'));
 
 var exec = require('child_process').exec;
@@ -83,6 +93,7 @@ io.sockets.on('connection', function (socket) {
 
 app.get('/',function(req,res){
   res.sendfile("index.html");
+  console.log("xml: "+req.query.xml+" java: "+req.query.java);
 });
 
 app.post('/login',function(req,res){
@@ -99,7 +110,6 @@ app.get('/testrun',function(req,res){
 });
 
 app.post('/testrun',function(req,res){
-  res.sendfile("index.html");
   var xmldata=req.body.xmldata;
   console.log("inside test run " + xmldata);
 
@@ -118,6 +128,8 @@ try{
 }catch(err){
   console.log('error in db push: ' + err)
 }
+
+  res.sendfile("index.html");
 
 });
 

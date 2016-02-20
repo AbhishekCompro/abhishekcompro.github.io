@@ -1,6 +1,6 @@
 {
-    "xmldata": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Task id=\"\" name=\"\">\n    <description></description>\n    <friendlyTaskID></friendlyTaskID>\n    <scenario name=\"\">\n        <Items count=\"0\"></Items>\n    </scenario>\n</Task>",
-    "javadata": "package sims.testcase.;\nimport org.testng.annotations.Test;\nimport sims.testcase.SimsBase;\npublic class Test__ extends SimsBase {@Test(groups = {\n        \"Acceptance\", \"Primary\"\n    }) public void _1() throws Exception {\n        System.out.println(\"START..\");\n        Thread.sleep(3000);\n        System.out.println(\"DONE.\");\n    }\n}",
-    "xmlFilename": "_.xml",
-    "javaFilename": "Test__.java"
+    "xmldata": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Task id=\"testssrrr\" name=\"\">\n    <description></description>\n    <friendlyTaskID>testssrrrT1</friendlyTaskID>\n    <scenario name=\"T1\">\n        <Items count=\"0\"></Items>\n    </scenario>\n</Task>",
+    "javadata": "package sims.testcase.;\nimport org.testng.annotations.Test;\nimport sims.testcase.SimsBase;\npublic class Test_testssrrr_T1 extends SimsBase {@Test(groups = {\n        \"Acceptance\", \"Primary\"\n    }) public void testssrrr_T11() throws Exception {\n        System.out.println(\"START..\");\n        Thread.sleep(3000);\n        System.out.println(\"DONE.\");\n    }\n}",
+    "xmlFilename": "testssrrr_T1.xml",
+    "javaFilename": "Test_testssrrr_T1.java"
 }
