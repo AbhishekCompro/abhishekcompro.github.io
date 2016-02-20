@@ -507,5 +507,12 @@
             }
         }*/
     </script>
+    <script>
+    var textarea = document.getElementById('run-logs');
+    setInterval(function(){
+    textarea.value+=Math.random()+'\n';
+    textarea.scrollTop = textarea.scrollHeight;
+    }, 1000);
+    </script>
   </body>
 </html>
