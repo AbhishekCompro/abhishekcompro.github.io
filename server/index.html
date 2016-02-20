@@ -478,16 +478,14 @@
 //            console.log('buff' + buff);
             var oldVal = document.getElementById('run-logs').innerHTML;
             document.getElementById('run-logs').innerHTML = oldVal + data.n;
+
+            var textarea = document.getElementById('run-logs');
+            textarea.scrollTop = textarea.scrollHeight;
+
             socket.emit( 'message', {received: 'received'} );
         });
 
-        function updateScroll(){
-            var element = document.getElementById("run-logs");
-            element.scrollTop = element.scrollHeight;
-        }
-
         //once a second
-        setInterval("updateScroll",1000);
     </script>
     <script>
 /*        var sw='run';
@@ -506,13 +504,6 @@
                 socket.emit( 'action', {todo: 'run'} );
             }
         }*/
-    </script>
-    <script>
-    var textarea = document.getElementById('run-logs');
-    setInterval(function(){
-    textarea.value+=Math.random()+'\n';
-    textarea.scrollTop = textarea.scrollHeight;
-    }, 1000);
     </script>
   </body>
 </html>
