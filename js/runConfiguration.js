@@ -249,7 +249,7 @@ var getdistJava = function(){
 
                         runJ = runJ + 'getAndPerformTask(' +
                             '"' +
-                            taskData.id.trim() +
+                            taskData.id.trim() + '.' + taskData.scenario.trim() +
                             '", ' +
                             '"' +
                             taskData.scenario.trim() +
@@ -261,7 +261,7 @@ var getdistJava = function(){
                             (methodChecked).toString() +
                             '"' +
                             ');            ';
-                        break;
+                        //break;
             }
             else{
 
@@ -270,7 +270,7 @@ var getdistJava = function(){
 
      ;
 
-    var res = js_beautify((preJ + preJin + runJ + postJ + postJout))
+    var res = js_beautify((preJ + preJin + runJ + postJ + postJout));
     return res;
 };
 
