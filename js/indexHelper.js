@@ -4,6 +4,9 @@
 
 function updateBreadcrum(data){
 
+    console.log('update br called ');
+    console.log(data);
+
     if(data != undefined){
 
         console.log('updating breadcrum for .. ' + data.item + data.method + data.action );
@@ -19,7 +22,6 @@ function updateBreadcrum(data){
         localStorage.setItem('currentItemNumber', JSON.stringify(data.item));
         localStorage.setItem('currentMethodNumber', JSON.stringify(data.method));
         localStorage.setItem('currentActionNumber', JSON.stringify(data.action));
-
 
         // todo: set currentTreeNode here
 
@@ -37,7 +39,7 @@ console.log('***** ' + clickedAddMethodNodeDataTree.item);
     a.action = 1;
     updateBreadcrum(a);
 
-    el.append('<li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":""}\' class="active treeview method-node">    <a href="#"><i class="fa fa-circle-o"></i> Method '+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+' <i class="fa fa-angle-left pull-right"></i>    <span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>    </a>    <ul class="treeview-menu action-tree">    <li data-tree=\'{"item":"' + parseInt(clickedAddMethodNodeDataTree.item) + '","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="action-node active">    <a href="#"><i class="fa fa-circle-o"></i> Action 1 <span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span></a>    </li>    <li data-tree=\'{"item":"1","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>Add New Action</span></a></li>    </ul>    </li>');
+    el.append('<li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":""}\' class="active treeview method-node">    <a href="#"><i class="fa fa-circle-o"></i> Method '+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+' <span href="#" class="reorder-up"><i class="fa fa-fw fa-arrow-up"></i></span><span href="#" class="reorder-down"><i class="fa fa-fw fa-arrow-down"></i></span> <i class="fa fa-angle-left pull-right"></i>    <span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>    </a>    <ul class="treeview-menu action-tree">    <li data-tree=\'{"item":"' + parseInt(clickedAddMethodNodeDataTree.item) + '","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="action-node active">    <a href="#"><i class="fa fa-circle-o"></i> Action 1 <span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span></a>    </li>    <li data-tree=\'{"item":"1","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>Add New Action</span></a></li>    </ul>    </li>');
 
 }
 
@@ -54,7 +56,7 @@ function addNewAction(el,clickedAddActionNodeDataTree){
 
 }
 
-$('.sidebar-menu').on('click', '.add-method', function() {
+$('.sidebar-menu').on('click', '.add-method', function(e) {
 
     $('.method-node').removeClass('active');
 
@@ -67,10 +69,10 @@ $('.sidebar-menu').on('click', '.add-method', function() {
     el.remove();
 
     methodTree.append('<li data-tree=\'{"item":"'+(parseInt(clickedAddMethodNodeDataTree.item))+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":""}\' class="add-method"><a href="#"><i class="fa fa-plus-square-o text-aqua"></i> <span>Add New Method</span></a></li>');
-
+    e.stopPropagation();
 });
 
-$('.sidebar-menu').on('click', '.add-action', function() {
+$('.sidebar-menu').on('click', '.add-action', function(e) {
 
     $('.action-node').removeClass('active');
 
@@ -82,7 +84,7 @@ $('.sidebar-menu').on('click', '.add-action', function() {
     el.prev().find('.delete-action-node').remove();
     el.remove();
     actionTree.append('<li data-tree=\'{"item":"'+(parseInt(clickedAddActionNodeDataTree.item))+'","method":"'+(parseInt(clickedAddActionNodeDataTree.method))+'","action":"'+(parseInt(clickedAddActionNodeDataTree.action) + 1)+'"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>Add New Action</span></a></li>');
-
+    e.stopPropagation();
 });
 
 
@@ -93,10 +95,11 @@ $('.sidebar-menu').on('click', '.item-node', function(event) {
     var el = $(this);
     var clickedItemNodeDataTree = targetNode.data('tree');
     updateBreadcrum(clickedItemNodeDataTree);
+    //event.stopPropagation();
 });
 
 
-$('.sidebar-menu').on('click', '.method-node', function() {
+$('.sidebar-menu').on('click', '.method-node', function(e) {
     //console.log($(event.target).parent().attr('class'));
     var targetNode = $(event.target).parent();
 
@@ -106,21 +109,37 @@ $('.sidebar-menu').on('click', '.method-node', function() {
 
     $('.method-node').removeClass('active');
     el.addClass( 'active' );
-
+    //e.stopPropagation();
 });
 
-$('.sidebar-menu').on('click', '.action-node', function() {
+$('.sidebar-menu').on('click', '.action-node', function(e) {
     //console.log($(event.target).parent().attr('class'));
     var targetNode = $(event.target).parent();
 
+/*    console.log($(this).index());
+    console.log(targetNode.parent().find('li').size());
+
+    console.log($(this).parent().parent().data('tree'));*/
+
     var el = $(this);
-    var clickedAddActionNodeDataTree = targetNode.data('tree');
+
+    var clickedAddActionNodeDataTree = $(this).parent().parent().data('tree');
+
+    clickedAddActionNodeDataTree.action = ($(this).index() + 1);
+
+    console.log(clickedAddActionNodeDataTree);
     updateBreadcrum(clickedAddActionNodeDataTree);
     $('.action-node').removeClass('active');
     el.addClass( 'active' );
-
+    e.stopPropagation();
 });
-$('.sidebar-menu').on('click', '.delete-action-node', function() {
+
+$('.sidebar-menu').on('click', '.delete-action-node', function(e) {
+
+    console.log($(this).parent().parent().index());
+     //console.log($(event.target).parent().find('li').size());
+
+     console.log($(this).parent().parent().parent().parent().data('tree'));
 
     $('.action-node').removeClass('active');
 
@@ -132,18 +151,24 @@ $('.sidebar-menu').on('click', '.delete-action-node', function() {
 
     actionTree.prev().find('a').append('<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
 
-    var currentAddActionData = actionTree.next().data('tree');
+    var currentAddActionData = $(this).parent().parent().parent().parent().data('tree');
+    currentAddActionData.action = ($(this).parent().parent().index() + 1);
+
+    console.log(currentAddActionData);
+
     var updatedAddActionData = {"item":currentAddActionData.item,"method":currentAddActionData.method,"action":(parseInt(currentAddActionData.action) - 1)};
+
+
     actionTree.next().data('tree', updatedAddActionData);
 
     updateBreadcrum({"item":"","method":"","action":""});
     actionTree.remove();
 
     delete taskData.items[parseInt(currentAddActionData.item)-1].methods[parseInt(currentAddActionData.method)-1].actions[parseInt(currentAddActionData.action)-1];
-
+    e.stopPropagation();
 });
 
-$('.sidebar-menu').on('click', '.delete-method-node', function() {
+$('.sidebar-menu').on('click', '.delete-method-node', function(e) {
 
     $('.method-node').removeClass('active');
 
@@ -167,5 +192,5 @@ $('.sidebar-menu').on('click', '.delete-method-node', function() {
     methodTree.remove();
 
     delete taskData.items[parseInt(currentAddMethodData.item)-1].methods[parseInt(currentAddMethodData.method)-1];
-
+    e.stopPropagation();
 });

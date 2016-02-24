@@ -314,6 +314,7 @@ $("#runTaskOnServer").click(function(){
 });
 
 $( "#run-conf-sidebar" ).click(function() {
+    $("body").addClass("sidebar-collapse");
     renderRunConfiguration();
 });
 
