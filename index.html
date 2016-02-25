@@ -365,9 +365,9 @@
             <li class="active" data-action='1' id="b_action">Action 1</li>
           </ol>
 
-          <h1 style="padding: 0 0 0 60px; display: inline">
+<!--          <h1 style="padding: 0 0 0 260px;">
             Add Action Details
-          </h1>
+          </h1>-->
 
         </section>
 
@@ -416,7 +416,7 @@
           <!-- Horizontal Form -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Details Form &nbsp;&nbsp;</h3>
+              <h3 class="box-title">Action Details Form &nbsp;&nbsp;</h3>
               <span class="functionDisplayName"></span>
             </div><!-- /.box-header -->
             <!-- form start -->
@@ -556,7 +556,18 @@
     // todo - update lsm for all & current node data on reorder  + update breadcrum & current node
     var $current = $('.action-node.active')
     var $previous = $current.prev('li');
+
+/*    console.log('$current ' + ($current.index() + 1));
+    console.log('$next ' + ($previous.index() + 1));*/
+
+    var currentIndex = ($current.index());
+    var nextIndex = ($previous.index()+2);
+
     if($previous.length !== 0){
+
+      $current.find('a').html('<i class="fa fa-circle-o"></i>Action ' + currentIndex);
+      $previous.find('a').html('<i class="fa fa-circle-o"></i>Action ' + nextIndex);
+
 //      remove / add delete node
       if($current.next('li').next('li').length == 0){
         $current.find('.delete-action-node').remove();
@@ -576,6 +587,12 @@
 
 //      update view
       $current.insertBefore($previous);
+
+      var a = $.extend(true, {}, updatedAddActionData);
+      a.item = parseInt(a.item);
+      a.method = parseInt(a.method);
+      a.action = currentIndex;
+      updateBreadcrum(a);
     }
     return false;
   });
@@ -588,8 +605,15 @@
     // todo - update lsm for all & current node data on reorder + update breadcrum & current node
     var $current = $('.action-node.active')
     var $next = $current.next('li');
+
+    var currentIndex = ($current.index() + 2);
+    var nextIndex = ($next.index());
+
     if($next.next('li').length !== 0){
 //      update data
+
+      $current.find('a').html('<i class="fa fa-circle-o"></i>Action ' + currentIndex);
+      $next.find('a').html('<i class="fa fa-circle-o"></i>Action ' + nextIndex);
 
       //      remove / add delete node
       if($next.next('li').next('li').length == 0){
@@ -608,6 +632,13 @@
 
 //      update view
       $current.insertAfter($next);
+
+      var a = $.extend(true, {}, updatedAddActionData);
+      a.item = parseInt(a.item);
+      a.method = parseInt(a.method);
+      a.action = currentIndex;
+      updateBreadcrum(a);
+
     }
     return false;
 
