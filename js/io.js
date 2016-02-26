@@ -214,8 +214,18 @@ var initCurrentMethodData = function(callback){
         console.log('currentItemNumber' + currentItemNumber);
         console.log('currentMethodNumber' + currentMethodNumber);
 
-        taskData.items[parseInt(currentItemNumber) - 1].init = true;
-        addValue(taskData.items[parseInt(currentItemNumber)-1],'methods', (parseInt(currentMethodNumber)-1) ,currentMethodDetails);
+        try{
+            if(taskData.items[parseInt(currentItemNumber) - 1].methods[(parseInt(currentMethodNumber)-1)].init){
+
+                taskData.items[parseInt(currentItemNumber) - 1].methods[(parseInt(currentMethodNumber)-1)].type  = methodType;
+                taskData.items[parseInt(currentItemNumber) - 1].methods[(parseInt(currentMethodNumber)-1)].group = methodGroup;
+
+            }
+        }catch(er){
+            taskData.items[parseInt(currentItemNumber) - 1].init = true;
+            addValue(taskData.items[parseInt(currentItemNumber)-1],'methods', (parseInt(currentMethodNumber)-1) ,currentMethodDetails);
+        }
+
         localStorage.setItem('taskData', JSON.stringify(taskData));
     }
     else{
@@ -256,13 +266,12 @@ var initCurrentActionData = function(callback){
                     var actKey = $( this).attr('id');
                     var actVal = $( this).val();
                     var localActionValue = { actKey : actKey, actVal : actVal}
-                    addValue(currentActionDetails,'values',index, localActionValue)
+                    addValue(currentActionDetails,'values',index, localActionValue);
 
                     console.log( index + ": " +$( this).attr('id') + ' : ' + $( this).val() );
                 });
-                addValue(taskData.items[parseInt(currentItemNumber)-1].methods[parseInt(currentMethodNumber)-1],'actions', (parseInt(currentActionNumber)-1) ,currentActionDetails);
-
             }
+            addValue(taskData.items[parseInt(currentItemNumber)-1].methods[parseInt(currentMethodNumber)-1],'actions', (parseInt(currentActionNumber)-1) ,currentActionDetails);
 
             localStorage.setItem('taskData', JSON.stringify(taskData));
         }
@@ -302,7 +311,7 @@ $( "#saveTaskDetails" ).click(function() {
     var self = this;
     setTimeout(function() {
         $( self).find('.fa-refresh').remove()
-    }, 1000);
+    }, 500);
 
 });
 
@@ -315,7 +324,7 @@ $( "#saveMethodDetails" ).click(function() {
     var self = this;
     setTimeout(function() {
         $( self).find('.fa-refresh').remove()
-    }, 1000);
+    }, 500);
 });
 
 $( "#saveActionDetails" ).click(function() {
@@ -327,7 +336,7 @@ $( "#saveActionDetails" ).click(function() {
     var self = this;
     setTimeout(function() {
         $( self).find('.fa-refresh').remove()
-    }, 1000);
+    }, 500);
 });
 
 

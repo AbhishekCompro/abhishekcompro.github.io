@@ -552,7 +552,18 @@
 
   // Retrieve the object from storage
   //  var taskData = localStorage.getItem('taskData');
+
+
+  var swapArrayElement = function(list,x,y){
+    var b = list[y];
+    list[y] = list[x];
+    list[x] = b;
+
+    return list;
+  };
+
   $('.sidebar-menu').on('click', '.reorder-up', function() {
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
     // todo - update lsm for all & current node data on reorder  + update breadcrum & current node
     var $current = $('.action-node.active')
     var $previous = $current.prev('li');
@@ -593,6 +604,15 @@
       a.method = parseInt(a.method);
       a.action = currentIndex;
       updateBreadcrum(a);
+
+//      swap data & save
+
+      var updatedActions = swapArrayElement(taskData.items[(a.item - 1)].methods[(a.method - 1)].actions,(currentIndex-1),currentIndex);
+      taskData.items[(a.item-1)].methods[(a.method-1)].actions = updatedActions;
+
+      localStorage.setItem('taskData', JSON.stringify(taskData));
+
+      refreshForm();
     }
     return false;
   });
@@ -602,6 +622,7 @@
    });*/
 
   $('.sidebar-menu').on('click', '.reorder-down', function() {
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
     // todo - update lsm for all & current node data on reorder + update breadcrum & current node
     var $current = $('.action-node.active')
     var $next = $current.next('li');
@@ -638,6 +659,15 @@
       a.method = parseInt(a.method);
       a.action = currentIndex;
       updateBreadcrum(a);
+
+//      swap data & save
+
+      var updatedActions = swapArrayElement(taskData.items[(a.item - 1)].methods[(a.method - 1)].actions,currentIndex-1,(currentIndex-2));
+      taskData.items[(a.item-1)].methods[(a.method-1)].actions = updatedActions;
+
+      localStorage.setItem('taskData', JSON.stringify(taskData));
+
+      refreshForm();
 
     }
     return false;
