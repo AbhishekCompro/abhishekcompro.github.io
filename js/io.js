@@ -157,6 +157,8 @@ resetLSM = function(){
         values: []
     };
 
+    localStorage.setItem('pathwayListData', '');
+
 }
 
 

@@ -103,5 +103,8 @@ $( "#exportXMLTop" ).click(function() {
 
     var xmlFilename = (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_");
 
-    download(new Blob([prettyXML]), xmlFilename+".xml", "text/plain");
+    //download(new Blob([prettyXML]), xmlFilename+".xml", "text/plain");
+
+    //todo: create and export full java and xml acc to pathway & call server with params for commit to svn & download files.
+
 });

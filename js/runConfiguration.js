@@ -318,3 +318,54 @@ $( "#run-conf-sidebar" ).click(function() {
     renderRunConfiguration();
 });
 
+
+var addToPathway = function(){
+
+    var pathwayListData =   JSON.parse(localStorage.getItem('pathwayListData'));
+
+    var pathwayListItem = '';
+    var currentPathway = [];
+
+    for(var i=0;i<taskData.items.length;i++){
+
+        if(taskData.items[i].init){
+
+            //if($('#run-item-'+(i+1)).is(':checked') == true){
+
+                var methodChecked = $('input[name="item'+(i+1)+'-method"]:checked', '#item'+(i+1)+'-methods').data('method');
+
+
+                currentPathway.push('"'+(i+1)+'", "'+methodChecked+'"') ;
+                pathwayListItem = pathwayListItem + ' M-' + methodChecked;
+
+        }
+        else{
+
+        }
+    }
+
+    pathwayListData.push(currentPathway);
+    localStorage.setItem('pathwayListData', JSON.stringify(pathwayListData));
+
+    $('#pathwayList').append('<li><div class=" bg-green" style="position: relative; z-index: auto; left: 0px; top: 0px; padding: 5px; margin: 2px">'+pathwayListItem+' <a href="#" class="deletePathway"><span class="label button pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span></a></div></li>');
+};
+
+$( "#addToPathwayList" ).click(function() {
+    addToPathway();
+});
+
+$('#pathwayList').on('click', '.deletePathway', function(e) {
+    var pathwayListData =   JSON.parse(localStorage.getItem('pathwayListData'));
+
+    var el = $(this);
+    console.log('el.parent().index() '+el.parent().parent().index());
+
+    el.parent().parent().remove();
+    pathwayListData.splice((el.parent().parent().index() + 1), 1);
+
+    localStorage.setItem('pathwayListData', JSON.stringify(pathwayListData));
+    e.stopPropagation();
+});
+
+
+

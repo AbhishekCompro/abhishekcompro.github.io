@@ -107,7 +107,7 @@
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" id="exportXMLTop" data-toggle="dropdown">
               <i class="fa fa-file text-navy"></i>
-              <span class="hidden-xs">Export XML File</span>
+              <span class="hidden-xs">Export Files</span>
             </a>
           </li>
           <!-- Control Sidebar Toggle Button -->
@@ -497,9 +497,19 @@
         <div class="form-group" id="item5-methods"></div>
       </div>
 
-      <a class="btn btn-app">
-        <i id="runTaskOnServer" class="fa fa-play"></i> Run
+      <a id="addToPathwayList" class="btn btn-app">
+        <i class="fa fa-fw fa-plus-square"></i> Add Pathway
       </a>
+
+      <a id="runTaskOnServer" class="btn btn-app">
+        <i class="fa fa-play"></i> Run
+      </a>
+
+      <div>
+        <h5>Pathways: </h5>
+        <ul id="pathwayList"></ul>
+
+      </div>
 
     </div>
 
