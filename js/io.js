@@ -261,6 +261,15 @@ var initCurrentActionData = function(callback){
             currentActionDetails.syntax = $('.functionDisplayName').text().trim();
             currentActionDetails.init = true;
 
+            // update tree view
+            $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).find('a').html('<i class="fa fa-circle-o"></i>' + currentActionDetails.name);
+
+            if($('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).next('li').next('li').length == 0){
+                $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).find('.delete-action-node').remove();
+                $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).find('a').append('<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
+            }
+
+            // - ends
             if($( "#actionDetailsForm input").length){
 
                 $( "#actionDetailsForm input" ).each(function( index ) {

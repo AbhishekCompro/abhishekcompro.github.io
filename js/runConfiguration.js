@@ -196,7 +196,7 @@ var getdistXML = function(){
 };
 
 
-var getdistJava = function(){
+var getRunJava = function(){
 
     var taskData =   JSON.parse(localStorage.getItem('taskData'));
     console.log('in conf render ' + taskData.items.length);
@@ -283,16 +283,101 @@ var getdistJava = function(){
     return res;
 };
 
+
+var getPathwayJava = function(){
+
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
+    console.log('in conf render ' + taskData.items.length);
+
+    var itemsInitCount = 0;
+    for(var p=0;p<taskData.items.length;p++){
+
+        if(taskData.items[p].init){
+            itemsInitCount++;
+        }
+        else{
+            //console.log($('#run-item-'+ (p+1) ).parent());
+            //$('#run-item-'+ (p+1) ).parent().parent('.form-group').hide();
+        }
+    }
+    // todo - update to current app name
+    var preJ = 'package sims.testcase.' +
+        taskData.appName +
+        ';    import org.testng.annotations.Test;    import sims.testcase.SimsBase;    public class Test_' +
+        ((taskData.id).replace(/\./gi, "_")).trim()
+
+        +
+        '_' +
+        taskData.scenario.toUpperCase().trim()
+        +
+        ' extends SimsBase {    ';
+
+    var postJout = ' }';
+
+
+
+    // start iterate
+    var pathwayListData = JSON.parse(localStorage.getItem('pathwayListData'));
+    var runJFinal = preJ;
+
+    var testCount = 0;
+if(pathwayListData !== undefined){
+    pathwayListData.forEach( function (arrayItem)
+    {
+
+        // todo: create runj from taskdata lsm
+        var runJ = '';
+
+        var preJin = '\n    ' +
+            '@Test (groups = {' +
+            '"Acceptance", "Primary"' + //todo: change this
+            '})        public void ' +
+            ((taskData.id).replace(/\./gi, "_")).trim()
+            +
+            '_' +
+            (taskData.scenario.toUpperCase()).trim() + '_' + (++testCount).toString()
+            +
+            '() throws Exception {            System.out.println("START..");            ';
+
+        var postJ = 'Thread.sleep(3000);            ' +
+            'System.out.println("DONE.");        }   \n';
+
+        arrayItem.forEach( function (arrayItem2)
+        {
+
+            runJ = runJ + 'getAndPerformTask(' +
+            '"' +
+            taskData.id.trim() + '.' + taskData.scenario.trim() +
+            '", ' +
+            '"' +
+            taskData.scenario.trim() +
+            '", ' +
+            arrayItem2.toString()
+            +
+            ');            ';
+
+        });
+
+        runJFinal = runJFinal + js_beautify((preJin + runJ + postJ ));
+
+    });
+}
+    runJFinal = runJFinal + postJout;
+
+    console.log(js_beautify(runJFinal));
+    return js_beautify(runJFinal);
+};
+
 $("#runTaskOnServer").click(function(){
 
     var prettyRunXML = updateRunXml();
 
     //console.log('prettyRunXML');
     //console.log(prettyRunXML);
-    var prettyRunJava = getdistJava();  //todo: change this
+    var prettyRunJava = getRunJava();  //todo: change this
 
     var distXML = getdistXML();
-    var distJava = getdistJava();
+    var distJava = getPathwayJava();
 
     var taskData =   JSON.parse(localStorage.getItem('taskData'));
 
@@ -318,10 +403,14 @@ $( "#run-conf-sidebar" ).click(function() {
     renderRunConfiguration();
 });
 
+var pathwayListData = [];
 
 var addToPathway = function(){
 
-    var pathwayListData =   JSON.parse(localStorage.getItem('pathwayListData'));
+        if(localStorage.getItem('pathwayListData')){
+
+            pathwayListData = JSON.parse(localStorage.getItem('pathwayListData'));
+        }
 
     var pathwayListItem = '';
     var currentPathway = [];
@@ -344,7 +433,11 @@ var addToPathway = function(){
         }
     }
 
+    console.log(pathwayListData);
+
     pathwayListData.push(currentPathway);
+
+
     localStorage.setItem('pathwayListData', JSON.stringify(pathwayListData));
 
     $('#pathwayList').append('<li><div class=" bg-green" style="position: relative; z-index: auto; left: 0px; top: 0px; padding: 5px; margin: 2px">'+pathwayListItem+' <a href="#" class="deletePathway"><span class="label button pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span></a></div></li>');

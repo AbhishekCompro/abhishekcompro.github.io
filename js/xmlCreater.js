@@ -105,6 +105,7 @@ $( "#exportXMLTop" ).click(function() {
 
     //download(new Blob([prettyXML]), xmlFilename+".xml", "text/plain");
 
+    getPathwayJava();
     //todo: create and export full java and xml acc to pathway & call server with params for commit to svn & download files.
 
 });

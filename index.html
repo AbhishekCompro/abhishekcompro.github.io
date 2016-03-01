@@ -578,6 +578,8 @@
     var $current = $('.action-node.active')
     var $previous = $current.prev('li');
 
+/*    var _a = $current.html();
+    var _b = $previous.html();*/
 /*    console.log('$current ' + ($current.index() + 1));
     console.log('$next ' + ($previous.index() + 1));*/
 
@@ -585,9 +587,8 @@
     var nextIndex = ($previous.index()+2);
 
     if($previous.length !== 0){
-
-      $current.find('a').html('<i class="fa fa-circle-o"></i>Action ' + currentIndex);
-      $previous.find('a').html('<i class="fa fa-circle-o"></i>Action ' + nextIndex);
+/*      $current.find('a').html('<i class="fa fa-circle-o"></i>Action ' + currentIndex);
+      $previous.find('a').html('<i class="fa fa-circle-o"></i>Action ' + nextIndex);*/
 
 //      remove / add delete node
       if($current.next('li').next('li').length == 0){
@@ -641,12 +642,8 @@
     var nextIndex = ($next.index());
 
     if($next.next('li').length !== 0){
-//      update data
 
-      $current.find('a').html('<i class="fa fa-circle-o"></i>Action ' + currentIndex);
-      $next.find('a').html('<i class="fa fa-circle-o"></i>Action ' + nextIndex);
-
-      //      remove / add delete node
+//      remove / add delete node
       if($next.next('li').next('li').length == 0){
         $next.find('.delete-action-node').remove();
         $current.find('a').append('<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
@@ -684,17 +681,13 @@
 
   });
 
-  //  $('.action-node.active').click();
-
-  //  $("body").removeClass("sidebar-mini");
-
 </script>
 
-<!--<script type="text/javascript">
+<script type="text/javascript">
   window.onbeforeunload = function() {
     return "Are you sure you want to reload the page ? This will delete all unsaved data!";
   }
-</script>-->
+</script>
 
 </body>
 </html>
