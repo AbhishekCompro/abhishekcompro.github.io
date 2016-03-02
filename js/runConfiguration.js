@@ -370,26 +370,34 @@ if(pathwayListData !== undefined){
 
 $("#runTaskOnServer").click(function(){
 
+console.log('inside runTaskOnServer')
     var prettyRunXML = updateRunXml();
 
     //console.log('prettyRunXML');
     //console.log(prettyRunXML);
     var prettyRunJava = getRunJava();  //todo: change this
 
-    var distXML = getdistXML();
-    var distJava = getPathwayJava();
+    var distXML = '';
+    var distJava = '';
 
     var taskData =   JSON.parse(localStorage.getItem('taskData'));
 
-    var javaFilename =    'Test_' +   (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.java';
-    var xmlFilename =    (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.xml';
+    var javaFilename =    'Test_.java';
+    var xmlFilename =    '_.xml';
+
+try{
+     javaFilename =    'Test_' +   (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.java';
+     xmlFilename =    (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.xml';
+}catch(er){
+
+}
 
     console.log('prettyRunJava: ' + prettyRunJava);
 
     window.open ("http://localhost:80/testrun",",","menubar=1,resizable=1,width=1200,height=800");
 
     setTimeout(function(){
-        $.post("http://localhost:80/testrun",{xmlFilename:xmlFilename,xmldata: prettyRunXML,javaFilename:javaFilename,javadata: prettyRunJava, distXML: distXML, distJava:distJava}, function(data){
+        $.post("http://localhost:80/testrun",{xmlFilename: xmlFilename, xmldata: prettyRunXML, javaFilename: javaFilename, javadata: prettyRunJava, distXML: distXML, distJava: distJava, appName: taskData.appName}, function(data){
             if(data==='done')
             {
                 console.log("post success");
@@ -458,6 +466,44 @@ $('#pathwayList').on('click', '.deletePathway', function(e) {
 
     localStorage.setItem('pathwayListData', JSON.stringify(pathwayListData));
     e.stopPropagation();
+});
+
+$("#exportFinalTop").click(function(){
+
+    console.log('inside exportFinalTop')
+    var prettyRunXML = updateRunXml();
+
+    //console.log('prettyRunXML');
+    //console.log(prettyRunXML);
+    var prettyRunJava = getRunJava();
+
+    var distXML = getdistXML();
+    var distJava = getPathwayJava();
+
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
+
+    var javaFilename =    'Test_.java';
+    var xmlFilename =    '_.xml';
+
+    try{
+        javaFilename =    'Test_' +   (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.java';
+        xmlFilename =    (taskData.id +'_'+ taskData.scenario).replace(/\./gi, "_") + '.xml';
+    }catch(er){
+
+    }
+
+    //console.log('prettyRunJava: ' + distJava);
+
+    window.open ("http://localhost:80/commit",",","menubar=1,resizable=1,width=1200,height=800");
+
+    setTimeout(function(){
+        $.post("http://localhost:80/commit",{xmlFilename:xmlFilename,xmldata: prettyRunXML,javaFilename:javaFilename,javadata: prettyRunJava, distXML: distXML, distJava:distJava, appName: taskData.appName}, function(data){
+            if(data==='done')
+            {
+                console.log("post success");
+            }
+        });
+    }, 2000);
 });
 
 

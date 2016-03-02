@@ -3,6 +3,10 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
+var _localSrcBasepath = 'S:\\sims-2016-svn\\sim5office16\\src';
+var _taskXmlPath = '';  // \\SKL16\\AC\\02\\01.08.T1
+var _appName = '';  // access
+
 
 var fs = require('fs');
 
@@ -96,15 +100,50 @@ app.get('/',function(req,res){
   console.log("xml: "+req.query.xml+" java: "+req.query.java);
 });
 
-app.post('/login',function(req,res){
-  var user_name=req.body.user;
-  var password=req.body.password;
-  console.log("From Client pOST request: User name = "+user_name+" and password is "+password);
-  res.end("yes");
+
+app.get('/commit',function(req,res){
+  res.sendfile("index-commit.html");
+  console.log("xml: "+req.query.xml+" java: "+req.query.java);
+  //res.end("yes. " + "xml: "+req.query.xml+" java: "+req.query.java);
 });
 
+app.post('/commit',function(req,res){
+
+  var xmldata = req.body.distXML;
+  console.log("inside commit " + xmldata);
+
+  var javadata = req.body.distJava;
+  console.log("inside commit " + javadata);
+
+  var xmlDistFilename = req.body.xmlFilename;
+  var javaDistFilename = req.body.javaFilename;
+  var appName = req.body.appName;
+
+  console.log("inside commit xmlFilename " + xmlDistFilename);
+  console.log("inside commit javaFilename " + javaDistFilename);
+  try{
+    db.push("/xmlDist",xmldata,false);
+    db.push("/javaDist",javadata,false);
+    db.push("/xmlDistFilename",xmlDistFilename,false);
+    db.push("/javaDistFilename",javaDistFilename,false);
+    db.push("/appName",appName,false);
+    _appName = appName;
+  }catch(err){
+    console.log('error in db push: ' + err)
+  }
+
+  _taskXmlPath = getDirFromXMlName(xmlDistFilename);
+
+  updateTaskList(_appName,javaDistFilename.replace('.java',''));
+  updatePom(_appName);
+
+  res.sendfile("index-commit.html");
+  console.log("xml: "+req.query.xml+" java: "+req.query.java);
+});
+
+
 app.get('/testrun',function(req,res){
-  res.sendfile("index.html");
+  res.sendfile("index-run.html");
   console.log("xml: "+req.query.xml+" java: "+req.query.java);
   //res.end("yes. " + "xml: "+req.query.xml+" java: "+req.query.java);
 });
@@ -118,6 +157,8 @@ app.post('/testrun',function(req,res){
 
   var xmlFilename = req.body.xmlFilename;
   var javaFilename = req.body.javaFilename;
+
+  var appName = req.body.appName;
   console.log("inside test run xmlFilename " + xmlFilename);
   console.log("inside test run javaFilename " + javaFilename);
 try{
@@ -125,11 +166,18 @@ try{
   db.push("/javadata",javadata,false);
   db.push("/xmlFilename",xmlFilename,false);
   db.push("/javaFilename",javaFilename,false);
+  db.push("/appName",appName,false);
+  _appName = appName;
 }catch(err){
   console.log('error in db push: ' + err)
 }
 
-  res.sendfile("index.html");
+  _taskXmlPath = getDirFromXMlName(xmlFilename);
+
+  updateTaskList(_appName,javaFilename.replace('.java',''));
+  updatePom(_appName);
+
+  res.sendfile("index-run.html");
 
 });
 
@@ -139,16 +187,38 @@ app.get('/renderContent',function(req,res){
   var javadata ='';
   var xmlFilename ='' ;
   var javaFilename ='';
+  var appName='';
+
 try{
   xmldata = db.getData("/xmldata");
   javadata = db.getData("/javadata");
   xmlFilename = db.getData("/xmlFilename");
   javaFilename = db.getData("/javaFilename");
+  appName = db.getData("/appName");
 
 }catch(err){
   console.log(err)
 }
   res.send({xmldata:xmldata,javadata:javadata,xmlFilename:xmlFilename,javaFilename:javaFilename});
+  res.end();
+});
+
+app.get('/renderContentDist',function(req,res){
+  console.log("inside render content");
+  var xmlDist ='';
+  var javaDist ='';
+  var xmlDistFilename ='' ;
+  var javaDistFilename ='';
+  try{
+    xmlDist = db.getData("/xmlDist");
+    javaDist = db.getData("/javaDist");
+    xmlDistFilename = db.getData("/xmlDistFilename");
+    javaDistFilename = db.getData("/javaDistFilename");
+
+  }catch(err){
+    console.log(err)
+  }
+  res.send({xmlDist:xmlDist,javaDist:javaDist,xmlDistFilename:xmlDistFilename,javaDistFilename:javaDistFilename});
   res.end();
 });
 
@@ -211,6 +281,53 @@ app.get('/killTest',function(req,res){
   res.end("yes.");
 });
 
+app.get('/generateTestFilesDist',function(req,res){
+  console.log("inside generate files");
+
+  var xmlDist ='';
+  var javaDist ='';
+  var xmlDistFilename ='' ;
+  var javaDistFilename ='';
+  try{
+    xmlDist = db.getData("/xmlDist");
+    javaDist = db.getData("/javaDist");
+    xmlDistFilename = db.getData("/xmlDistFilename");
+    javaDistFilename = db.getData("/javaDistFilename");
+
+  }catch(err){
+    console.log(err)
+  }
+
+
+  var xmlbasepath = _localSrcBasepath +"\\test\\resources\\taskXML"+_taskXmlPath+"\\"+xmlDistFilename;
+  var javabasepath = _localSrcBasepath +"\\test\\java\\sims\\testcase\\"+_appName+"\\"+javaDistFilename;
+
+
+  var dir = _localSrcBasepath +"\\test\\resources\\taskXML"+_taskXmlPath+"\\";
+
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
+
+  fs.writeFile(xmlbasepath, xmlDist, function(error) {
+    if (error) {
+      console.error("write error:  " + error.message);
+    } else {
+      console.log("Successful Write to " + xmlbasepath);
+    }
+  });
+
+  fs.writeFile(javabasepath, javaDist, function(error) {
+    if (error) {
+      console.error("write error:  " + error.message);
+    } else {
+      console.log("Successful Write to " + javabasepath);
+    }
+  });
+
+  res.end("file write success.");
+});
+
 app.get('/generateTestFiles',function(req,res){
   console.log("inside generate files");
 
@@ -228,8 +345,14 @@ app.get('/generateTestFiles',function(req,res){
     console.log(err)
   }
 
-  var xmlbasepath = "S:\\sims-2016-svn\\sim5office16\\src\\test\\resources\\taskXML\\SKL16\\AC\\02\\01.08.T1\\"+xmlFilename;
-  var javabasepath = "S:\\sims-2016-svn\\sim5office16\\src\\test\\java\\sims\\testcase\\access\\"+javaFilename;
+  var xmlbasepath = _localSrcBasepath +"\\test\\resources\\taskXML"+_taskXmlPath+"\\"+xmlFilename;
+  var javabasepath = _localSrcBasepath +"\\test\\java\\sims\\testcase\\"+_appName+"\\"+javaFilename;
+
+  var dir = _localSrcBasepath +"\\test\\resources\\taskXML"+_taskXmlPath+"\\";
+
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir);
+  }
 
   fs.writeFile(xmlbasepath, xmldata, function(error) {
     if (error) {
@@ -259,4 +382,80 @@ app.get('/commitToSvn',function(req,res){
   console.log("inside commitToSvn");
   res.end("yes.");
 });
+
+var getDirFromXMlName = function(taskXMLName){
+
+  var folderNames = taskXMLName.split("_");
+
+  if(folderNames.length == 6)
+  {
+    var dirName = "";
+    dirName = "//" + folderNames[0] + "//" + folderNames[1] + "//" + folderNames[2] + "//";
+    var tmpFolderName = folderNames[0] + "_" + folderNames[1] + "_" + folderNames[2] + "_";
+    dirName = dirName + taskXMLName.replace(new RegExp(tmpFolderName, 'g'), '').replace(new RegExp('_', 'g'), '.').replace(new RegExp('.xml', 'g'), '');
+
+    console.log('dirName: ' + dirName);
+    return dirName;
+
+  }
+  else {
+    return null;
+  }
+};
+
+
+
+function updateTaskList(appName, javaClassName) {
+
+  var appData ='<'+appName+' practice="off">  <task>sims.testcase.'+appName+'.'+javaClassName+'</task> </'+appName+'>';
+
+   var content;
+// First I want to read the file
+  fs.readFile('./tasklist.xml',encoding='utf8', function read(err, data) {
+    if (err) {
+      throw err;
+    }
+    content = data;
+
+    // Invoke the next step here however you like
+    content = content.replace('##customData##',appData);
+
+    fs.writeFile(_localSrcBasepath +"\\test\\resources\\tasklist.xml", content, function(error) {
+      if (error) {
+        console.error("write error:  " + error.message);
+      } else {
+        console.log("Successful Write to " + _localSrcBasepath +"\\test\\resources\\tasklist.xml");
+      }
+    });
+
+  });
+
+};
+
+function updatePom(appName) {
+
+  var appData ='<suiteXmlFile>src/test/java/sims/testsuite/testng_'+appName+'.xml</suiteXmlFile>';
+
+  var content;
+// First I want to read the file
+  fs.readFile(_localSrcBasepath.replace('src','')+"pom.xml",encoding='utf8', function read(err, data) {
+    if (err) {
+      throw err;
+    }
+    content = data;
+
+    // Invoke the next step here however you like
+    content = content.replace( /<suiteXmlFile(.*)suiteXmlFile>/g ,appData);
+
+    fs.writeFile(_localSrcBasepath.replace('src','')+"pom.xml", content, function(error) {
+      if (error) {
+        console.error("write error:  " + error.message);
+      } else {
+        console.log("Successful Write to " + _localSrcBasepath +"\\test\\resources\\tasklist.xml");
+      }
+    });
+
+  });
+
+};
 

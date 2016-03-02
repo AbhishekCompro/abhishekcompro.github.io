@@ -1,0 +1,51 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<sim5automation>
+	<server>
+		<url>http://192.168.2.150/sims4120503/SIM5Frame.aspx</url>
+		<username></username>
+		<password></password>
+	</server>
+	<envSet>
+		<env id="1">
+			<host>local</host>
+			<browser>Firefox</browser>
+			<browserVersion>42</browserVersion>
+			<platform>WINDOWS</platform>
+			<saucelabs/>
+		</env>
+		<env id="2">
+			<host>local</host>
+			<browser>Chrome</browser>
+			<browserVersion>46</browserVersion>
+			<platform>WINDOWS</platform>
+			<saucelabs/>
+		</env>
+		<!-- env id="3">
+			<host>saucelabs</host>
+			<browser>chrome</browser>
+			<browserVersion>46</browserVersion>
+			<platform>WINDOWS</platform>
+			<saucelabs>
+				<buildName>build</buildName>
+				<tagName>tags</tagName>
+				<testName>test</testName>
+				<userName>compro</userName>
+				<accessKey>0e4557d5-a2bf-480f-96c1-ce05ac9f138c</accessKey>
+				<isAppUrlPublic>true</isAppUrlPublic>
+			</saucelabs>
+		</env>
+		<env id="4">
+			<host>hub</host>
+			<browser>chrome</browser>
+			<browserVersion>46</browserVersion>
+			<platform>WINDOWS</platform>
+			<hubIP>1921.68.1.166</hubIP>
+			<hubPort>5555</hubPort>
+		</env-->
+	</envSet>
+	<runTask distributed="true">
+		<env id="2">
+			##customData##
+			</env>
+	</runTask>
+</sim5automation>

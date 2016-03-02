@@ -5,7 +5,7 @@
 
 $( "#header-items" ).hide();
 
-setTimeout(function(){
+/*setTimeout(function(){
 
     $.get('/renderContent', function(data) {
         $( "#header-items" ).show();
@@ -21,7 +21,7 @@ setTimeout(function(){
 
     });
 
-}, 5000);
+}, 5000);*/
 
 $( "#launchTest" ).click(function() {
     $.get('/launchTest', function(data) {
