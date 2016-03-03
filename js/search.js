@@ -151,13 +151,15 @@ console.log(actionList.excel.length);
 
 var initactionList = function(){
 
-    for(var i=0;i<actionList.action.length;i++){
+/*    for(var i=0;i<actionList.action.length;i++){
 
         $("#layout-skins-list tbody").append('                <tr>                  <td><code>'+actionList.excel[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
 
-    }
+    }*/
 
-    var currentApplication = "access";   // todo - change this & categorize action list
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
+
+    var currentApplication = taskData.appName;
     var filteredActionList;
 
     if(currentApplication == 'excel'){
@@ -175,7 +177,7 @@ var initactionList = function(){
 
     for(var i=0;i<filteredActionList.length;i++){
 
-        $("#layout-skins-list tbody").append('                <tr>                  <td><code>'+filteredActionList[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
+        $("#layout-skins-list tbody").append('                <tr class="action-details-button">                  <td><code>'+filteredActionList[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
 
     }
 };
@@ -187,7 +189,7 @@ var updateDetailsForm = function(){
     $('#layout-skins-list').on('click', '.action-details-button', function() {
         $("#actionDetailsForm").empty();
     var el = $(this);
-    var clickedNodeText = el.parent().parent().text();
+    var clickedNodeText = el.find('code').text();
     $(".functionDisplayName").text(clickedNodeText.trim());
 
     var actionNodeFunction =  clickedNodeText.trim().replace(/ *\([^)]*\) */g, "");
