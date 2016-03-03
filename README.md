@@ -39,7 +39,7 @@ Pre-requisites:<br />
 2. Java<br />
 3. Maven<br />
 
-## Major limitations of version 1.1<br />
+## Limitations of version 1.1<br />
 
 1. This will not work if user open this in multiple tabs / windows<br />
 2. Page refresh is not allowed for now, this will detach sync from data<br />
