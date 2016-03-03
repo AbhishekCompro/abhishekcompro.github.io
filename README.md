@@ -2,9 +2,9 @@
 
 At the top of the testing using selenium framework, this tool provides:<br />
 
-**Complete task scripting functionality**<br />
-**Single click partial item run support**<br />
-**Automatic final xml & java file generation**<br />
+**1. Complete task scripting functionality**<br />
+**2. Single click partial item run support**<br />
+**3. Automatic final xml & java file generation**<br />
 
 ## Usage<br />
 
