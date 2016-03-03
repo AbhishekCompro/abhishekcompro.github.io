@@ -1,53 +1,53 @@
-## Synopsis
+## Synopsis<br />
 
-At the top of the testing using selenium framework, this tool provides:
+At the top of the testing using selenium framework, this tool provides:<br />
 
-**Complete task scripting functionality**
-**Single click partial item run support**
-**Automatic final xml & java file generation**
+**Complete task scripting functionality**<br />
+**Single click partial item run support**<br />
+**Automatic final xml & java file generation**<br />
 
-## Usage
+## Usage<br />
 
-**Scripting**
-1. User select application type
-2. Add task details
-3. Add multiple methods and actions
+**Scripting**<br />
+1. User select application type<br />
+2. Add task details<br />
+3. Add multiple methods and actions<br />
 
-**Execution**
-1. Click top right settings button
-2. Select method / pathway to run
-3. Click on run - This will launch server page
-4. Click launch
+**Execution**<br />
+1. Click top right settings button<br />
+2. Select method / pathway to run<br />
+3. Click on run - This will launch server page<br />
+4. Click launch<br />
 
-Pre-requisites:
-1. Download runner server code
-2. Start the server using "npm start"
-3. Checkout selenium framework code from svn
-4. Launch http://localhost
-5. Set Path of selenium framework src folder
+Pre-requisites:<br />
+1. Download runner server code<br />
+2. Start the server using "npm start"<br />
+3. Checkout selenium framework code from svn<br />
+4. Launch http://localhost<br />
+5. Set Path of selenium framework src folder<br />
 
-**Exporting xml & java files**
-1. Add Pathways
-	a) Select methods in each item & click "Add Pathway"
-	b) You can add / delete multiple pathways using above steps
-2. Create Files by clicking "Export Files" on top right corner - This will launch the server page
-3. On the new page you can run complete set of pathways
-4. You can download xml & Java files from this page
+**Exporting xml & java files**<br />
+1. Add Pathways<br />
+	a) Select methods in each item & click "Add Pathway"<br />
+	b) You can add / delete multiple pathways using above steps<br />
+2. Create Files by clicking "Export Files" on top right corner - This will launch the server page<br />
+3. On the new page you can run complete set of pathways<br />
+4. You can download xml & Java files from this page<br />
 
-## Dependencies
-1. Node
-2. Java
-3. Maven
+## Dependencies<br />
+1. Node<br />
+2. Java<br />
+3. Maven<br />
 
-## Major limitations of version 1.1
+## Major limitations of version 1.1<br />
 
-1. This will not work if user open this in multiple tabs / windows
-2. Page refresh is not allowed for now, this will detach sync from data
+1. This will not work if user open this in multiple tabs / windows<br />
+2. Page refresh is not allowed for now, this will detach sync from data<br />
 
-## Features in queue
-1. Fixes for Limitations of version 1.1
-2. Support to update tasks
-3. Autofill task / method / action data
+## Features in queue<br />
+1. Fixes for Limitations of version 1.1<br />
+2. Support to update tasks<br />
+3. Autofill task / method / action data<br />
 
-## Reporting issues
-Please feel free to add issues and suggestion in issues section.  
+## Reporting issues<br />
+Please feel free to add issues and suggestion in issues section.<br />
