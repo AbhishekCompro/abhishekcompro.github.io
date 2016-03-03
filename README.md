@@ -21,7 +21,7 @@ At the top of the testing using selenium framework, this tool provides:<br />
 
 Pre-requisites:<br />
 1. Download runner server code<br />
-2. Start the server using "npm start"<br />
+2. Start the server using "npm start" or run start.bat<br />
 3. Checkout selenium framework code from svn<br />
 4. Launch http://localhost<br />
 5. Set Path of selenium framework src folder<br />
