@@ -9,9 +9,10 @@ At the top of the testing using selenium framework, this tool provides:<br />
 ## Usage<br />
 
 **Scripting**<br />
-1. User select application type<br />
-2. Add task details<br />
-3. Add multiple methods and actions<br />
+1. Launch URL: http://abhishekcompro.github.io
+2. User select application type<br />
+3. Add task details<br />
+4. Add multiple methods and actions<br />
 
 **Execution**<br />
 1. Click top right settings button<br />
@@ -41,11 +42,11 @@ Pre-requisites:<br />
 
 ## Limitations of version 1.1<br />
 
-1. This will not work if user open this in multiple tabs / windows<br />
+1. This will not work if user open app in multiple tabs / windows<br />
 2. Page refresh is not allowed for now, this will detach sync from data<br />
 
 ## Features in queue<br />
-1. Fixes for Limitations of version 1.1<br />
+1. Add support for known Limitations of version 1.1 <br />
 2. Support to update tasks<br />
 3. Autofill task / method / action data<br />
 
