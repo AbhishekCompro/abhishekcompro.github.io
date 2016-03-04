@@ -159,27 +159,32 @@ var initactionList = function(){
 
     var taskData =   JSON.parse(localStorage.getItem('taskData'));
 
-    var currentApplication = taskData.appName;
-    var filteredActionList;
+    if((taskData.appName != null) && (taskData.appName != undefined) && (taskData.appName != "")){
 
-    if(currentApplication == 'excel'){
-        filteredActionList = actionList.excel;
-    }
-    if(currentApplication == 'word'){
-        filteredActionList = actionList.word;
-    }
-    if(currentApplication == 'ppt'){
-        filteredActionList = actionList.ppt;
-    }
-    if(currentApplication == 'access'){
-        filteredActionList = actionList.access;
+        var currentApplication = taskData.appName;
+        var filteredActionList;
+
+        if(currentApplication == 'excel'){
+            filteredActionList = actionList.excel;
+        }
+        if(currentApplication == 'word'){
+            filteredActionList = actionList.word;
+        }
+        if(currentApplication == 'ppt'){
+            filteredActionList = actionList.ppt;
+        }
+        if(currentApplication == 'access'){
+            filteredActionList = actionList.access;
+        }
+
+        for(var i=0;i<filteredActionList.length;i++){
+
+            $("#layout-skins-list tbody").append('                <tr class="action-details-button">                  <td><code>'+filteredActionList[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
+
+        }
+
     }
 
-    for(var i=0;i<filteredActionList.length;i++){
-
-        $("#layout-skins-list tbody").append('                <tr class="action-details-button">                  <td><code>'+filteredActionList[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
-
-    }
 };
 
 initactionList();

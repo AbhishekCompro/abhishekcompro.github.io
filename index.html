@@ -712,7 +712,7 @@
 <script>
 // todo - launch modal and get appname if not in lsm and init action list on basis of that
 
-  if(localStorage.getItem('userAppType') == "undefined"){
+  if((localStorage.getItem('userAppType') == "undefined") || (localStorage.getItem('userAppType') == "") || (localStorage.getItem('userAppType') == null)){
 //    $('#userAppTypeModal').modal('show');
     $('#userAppTypeModal').modal({backdrop: 'static', keyboard: false})
   }
