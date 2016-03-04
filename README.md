@@ -9,7 +9,7 @@ At the top of the testing using selenium framework, this tool provides:<br />
 ## Usage<br />
 
 **Scripting**<br />
-1. Launch URL: http://abhishekcompro.github.io
+1. Launch URL: http://abhishekcompro.github.io<br />
 2. User select application type<br />
 3. Add task details<br />
 4. Add multiple methods and actions<br />
@@ -50,5 +50,6 @@ Pre-requisites:<br />
 2. Support to update tasks<br />
 3. Autofill task / method / action data<br />
 
-## Reporting issues<br />
-Please feel free to add issues and suggestion in issues section.<br />
+## Contributing & Reporting issues
+Please feel free to contribute code; report issues and add suggestions on github.
+GitHub Repo: https://github.com/AbhishekCompro/abhishekcompro.github.io
