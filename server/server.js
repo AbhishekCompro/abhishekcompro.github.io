@@ -37,6 +37,7 @@ var ls;
 
 server.listen(80,function(){
   console.log("Started on PORT 80");
+  console.log("Launch url http://localhost in browser to configure");
 });
 
 function handler (req, res) {
