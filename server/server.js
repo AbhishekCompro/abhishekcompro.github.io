@@ -38,6 +38,13 @@ var ls;
 server.listen(80,function(){
   console.log("Started on PORT 80");
   console.log("Launch url http://localhost in browser to configure");
+
+  try{
+   var srcPath = db.getData("/srcPath");
+    _localSrcBasepath = srcPath;
+  }catch(err){
+    //console.log(err)
+  }
 });
 
 function handler (req, res) {
@@ -460,3 +467,25 @@ function updatePom(appName) {
 
 };
 
+app.get('/getSrcPath',function(req,res){
+  console.log("inside getSrcPath");
+  var srcPath ='';
+  try{
+    srcPath = db.getData("/srcPath");
+
+  }catch(err){
+    console.log(err)
+  }
+  res.send({srcPath:srcPath});
+  res.end();
+});
+
+app.post('/setSrcPath',function(req,res){
+  var srcPath=req.body.srcPath;
+  try{
+    _localSrcBasepath = srcPath;
+    db.push("/srcPath",srcPath,false);
+  }catch(err){
+    console.log('error in db push: ' + err)
+  }
+});
