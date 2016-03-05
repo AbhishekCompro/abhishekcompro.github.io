@@ -159,7 +159,7 @@ resetLSM = function(){
 
     localStorage.setItem('pathwayListData', '');
 
-}
+};
 
 
 var initCurrentTaskData = function(callback){
@@ -360,7 +360,12 @@ $( "#exportXMLTop" ).click(function() {
 
 $( "#resetLSM" ).click(function() {
     resetLSM();
-    location.reload();
+    initactionList();
+    window.location.reload(true);
+
+    //var userAppType =   JSON.parse(localStorage.getItem('userAppType'));
+//todo init action list here
+
 });
 
 //resetLSM();
