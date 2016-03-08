@@ -9,6 +9,7 @@ var _appName = '';  // access
 
 
 var fs = require('fs');
+var path = require('path');
 
 var JsonDB = require('node-json-db');
 var db = new JsonDB("myDataBase", true, true);
@@ -314,24 +315,46 @@ app.get('/generateTestFilesDist',function(req,res){
   var dir = _localSrcBasepath +"\\test\\resources\\taskXML"+_taskXmlPath+"\\";
 
   if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
+    //fs.mkdirSync(dir);
+    fs.mkdirParent(dir, function(){
+
+      fs.writeFile(xmlbasepath, xmlDist, function(error) {
+        if (error) {
+          console.error("write error:  " + error.message);
+        } else {
+          console.log("Successful Write to " + xmlbasepath);
+        }
+      });
+
+      fs.writeFile(javabasepath, javaDist, function(error) {
+        if (error) {
+          console.error("write error:  " + error.message);
+        } else {
+          console.log("Successful Write to " + javabasepath);
+        }
+      });
+
+
+    });
   }
+  else{
 
-  fs.writeFile(xmlbasepath, xmlDist, function(error) {
-    if (error) {
-      console.error("write error:  " + error.message);
-    } else {
-      console.log("Successful Write to " + xmlbasepath);
-    }
-  });
+    fs.writeFile(xmlbasepath, xmlDist, function(error) {
+      if (error) {
+        console.error("write error:  " + error.message);
+      } else {
+        console.log("Successful Write to " + xmlbasepath);
+      }
+    });
 
-  fs.writeFile(javabasepath, javaDist, function(error) {
-    if (error) {
-      console.error("write error:  " + error.message);
-    } else {
-      console.log("Successful Write to " + javabasepath);
-    }
-  });
+    fs.writeFile(javabasepath, javaDist, function(error) {
+      if (error) {
+        console.error("write error:  " + error.message);
+      } else {
+        console.log("Successful Write to " + javabasepath);
+      }
+    });
+  }
 
   res.end("file write success.");
 });
@@ -359,24 +382,45 @@ app.get('/generateTestFiles',function(req,res){
   var dir = _localSrcBasepath +"\\test\\resources\\taskXML"+_taskXmlPath+"\\";
 
   if (!fs.existsSync(dir)){
-    fs.mkdirSync(dir);
+    //fs.mkdirSync(dir);
+    fs.mkdirParent(dir,function(){
+      fs.writeFile(xmlbasepath, xmldata, function(error) {
+        if (error) {
+          console.error("write error:  " + error.message);
+        } else {
+          console.log("Successful Write to " + xmlbasepath);
+        }
+      });
+
+      fs.writeFile(javabasepath, javadata, function(error) {
+        if (error) {
+          console.error("write error:  " + error.message);
+        } else {
+          console.log("Successful Write to " + javabasepath);
+        }
+      });
+
+    });
+  }
+  else{
+    fs.writeFile(xmlbasepath, xmldata, function(error) {
+      if (error) {
+        console.error("write error:  " + error.message);
+      } else {
+        console.log("Successful Write to " + xmlbasepath);
+      }
+    });
+
+    fs.writeFile(javabasepath, javadata, function(error) {
+      if (error) {
+        console.error("write error:  " + error.message);
+      } else {
+        console.log("Successful Write to " + javabasepath);
+      }
+    });
   }
 
-  fs.writeFile(xmlbasepath, xmldata, function(error) {
-    if (error) {
-      console.error("write error:  " + error.message);
-    } else {
-      console.log("Successful Write to " + xmlbasepath);
-    }
-  });
 
-  fs.writeFile(javabasepath, javadata, function(error) {
-    if (error) {
-      console.error("write error:  " + error.message);
-    } else {
-      console.log("Successful Write to " + javabasepath);
-    }
-  });
 
   res.end("file write success.");
 });
@@ -489,3 +533,22 @@ app.post('/setSrcPath',function(req,res){
     console.log('error in db push: ' + err)
   }
 });
+
+
+fs.mkdirParent = function(dirPath, callback) {
+  //Call the standard fs.mkdir
+  var mode = null;
+  fs.mkdir(dirPath, mode, function(error) {
+    //When it fail in this way, do the custom steps
+    if (error && error.errno === 34) {
+      //Create all the parents recursively
+      fs.mkdirParent(path.dirname(dirPath), mode, callback);
+      //And then the directory
+      fs.mkdirParent(dirPath, mode, callback);
+    }
+    //Manually run the callback since we used our own callback to do all these
+    setTimeout(function(){ callback && callback(error); }, 3000);
+
+
+  });
+};

@@ -363,8 +363,35 @@ $( "#resetLSM" ).click(function() {
     initactionList();
     window.location.reload(true);
 
-    //var userAppType =   JSON.parse(localStorage.getItem('userAppType'));
-//todo init action list here
+/*    var userAppType =   JSON.parse(localStorage.getItem('userAppType'));
+
+
+    //var taskData =   JSON.parse(localStorage.getItem('taskData'));
+
+    if((userAppType != null) && (userAppType != undefined) && (userAppType != "")){
+        console.log('in 1')
+
+        var currentApplication = userAppType;
+        var filteredActionList;
+
+        if(currentApplication == 'excel'){
+            filteredActionList = actionList.excel;
+        }
+        if(currentApplication == 'word'){
+            filteredActionList = actionList.word;
+        }
+        if(currentApplication == 'ppt'){
+            filteredActionList = actionList.ppt;
+        }
+        if(currentApplication == 'access'){
+            filteredActionList = actionList.access;
+        }
+
+        for(var i=0;i<filteredActionList.length;i++){
+
+            $("#layout-skins-list tbody").append('                <tr class="action-details-button">                  <td><code>'+filteredActionList[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
+        }
+    }*/
 
 });
 

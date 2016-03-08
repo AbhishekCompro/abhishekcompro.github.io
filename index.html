@@ -281,7 +281,7 @@
         <li class="header">MISC</li>
         <!--<li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>-->
         <li><a href="#"id="previewXml" data-toggle="modal" data-target="#prettyXmlModal"><i class="fa fa-code text-fuchsia"></i> <span>Preview XML</span></a></li>
-        <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
+        <li><a href="#" id="exportJSON" data-toggle="modal" data-target="#exportJSONModal"><i class="fa fa-book"></i> <span>Export JSON</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
         <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
       </ul>
@@ -358,6 +358,32 @@
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button id="downloadFromPreviewXML" type="button" class="btn btn-primary">Export / Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exportJSONModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content" style="width: 600px;">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel1">Task JSON</h4>
+              </div>
+              <div class="box-body pad">
+
+                <article>
+                  <label for="files">Select a file: </label>
+                  <input id="files" type="file" />
+                  <output id="result" />
+                </article>
+
+              </div>
+              <div class="modal-footer">
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+                <button id="loadTaskJson" type="button" class="btn btn-primary">Load Task</button>
+                <button id="downloadTaskJSON" type="button" class="btn btn-primary">Export Current Task</button>
               </div>
             </div>
           </div>
@@ -580,6 +606,7 @@
 <script src="./js/runConfiguration.js"></script>
 <script src="./js/serverLink.js"></script>
 <script src="./js/renderOnReload.js"></script>
+<script src="./js/jsonExport.js"></script>
 <!--http://danml.com/download.html-->
 
 <script>
