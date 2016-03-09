@@ -36,7 +36,7 @@
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 
-  <script src="js/jquery.auto-complete.js"></script>
+  <!--<script src="js/jquery.auto-complete.js"></script>-->
   <style>
     body{
       min-width:1000px; /* suppose you want minimun width of 1000px */
@@ -139,7 +139,7 @@
       <!-- search form -->
       <form action="#" method="get" class="sidebar-form">
         <div class="input-group">
-          <input type="text" name="q1" class="form-control" placeholder="Search...">
+          <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="button" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -435,7 +435,7 @@
               <div class="row">
                 <form action="#" method="get" class="sidebar-form">
                   <div class="input-group">
-                    <input id="searchActions" type="text" name="q" class="form-control" placeholder="Search...">
+                    <input id="searchActions" type="text" name="q1" class="form-control" placeholder="Search...">
                           <span class="input-group-btn">
                             <span type="button" name="search" id="search-btn2" class="btn btn-flat"><i class="fa fa-search"></i></span>
                             <!--<button type="button" name="search" id="search-btn2" class="btn btn-flat"><i class="fa fa-search"></i></button>-->
@@ -790,6 +790,10 @@ $( ".logo" ).click(function() {
 /*  window.onbeforeunload = function() {
     return "Are you sure you want to reload the page ? This will delete all unsaved data!";
   }*/
+
+setTimeout(function() {
+  initactionList();
+}, 1000);
 </script>
 
 </body>
