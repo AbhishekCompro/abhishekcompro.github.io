@@ -86,17 +86,17 @@
               <button id="saveTaskDetails" type="button" class="btn btn-info pull-left">Save / Update</button>
             </div>
           </li>
-          <li class="dropdown user user-menu">
+<!--          <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-spinner text-gray"></i>
               <span class="hidden-xs">Reset / New - Task</span>
             </a>
             <ul class="dropdown-menu" style="width: 80px">
-              <!-- Menu Footer-->
+              &lt;!&ndash; Menu Footer&ndash;&gt;
               <li class="user-footer">
-                <!--                <div class="pull-left">
+                &lt;!&ndash;                <div class="pull-left">
                                   <a href="#" class="btn btn-primary btn-danger">Reset</a>
-                                </div>-->
+                                </div>&ndash;&gt;
                 <div>
                   <a href="#" id="resetLSM" class="btn btn-primary btn-danger">New Task</a>
                 </div>
@@ -104,14 +104,14 @@
             </ul>
           </li>
 
-          <!-- User Account: style can be found in dropdown.less -->
+          &lt;!&ndash; User Account: style can be found in dropdown.less &ndash;&gt;
 
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" id="exportFinalTop" data-toggle="dropdown">
               <i class="fa fa-file text-navy"></i>
               <span class="hidden-xs">Export Files</span>
             </a>
-          </li>
+          </li>-->
           <!-- Control Sidebar Toggle Button -->
           <li>
             <a id="run-conf-sidebar" href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -503,6 +503,34 @@
   <aside class="control-sidebar control-sidebar-dark" style="margin-top: 30px">
     <!-- Create the tabs -->
     <div class="pad" >
+
+      <li class="dropdown user user-menu" style="padding: 15px 0px 15px 0px">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          <i class="fa fa-spinner text-danger"></i>
+          <span class="hidden-xs">Reset / New - Task</span>
+        </a>
+        <ul class="dropdown-menu" style="width: 40px;">
+          <!-- Menu Footer-->
+          <li class="user-footer">
+            <!--                <div class="pull-left">
+                              <a href="#" class="btn btn-primary btn-danger">Reset</a>
+                            </div>-->
+            <div style="margin-left:25%">
+              <a href="#" id="resetLSM" class="btn btn-primary btn-danger">New Task</a>
+            </div>
+          </li>
+        </ul>
+      </li>
+
+      <!-- User Account: style can be found in dropdown.less -->
+
+      <li class="dropdown user user-menu" style="padding: 0px 0px 15px 0px">
+        <a href="#" class="dropdown-toggle" id="exportFinalTop" data-toggle="dropdown">
+          <i class="fa fa-file text-lime"></i>
+          <span class="hidden-xs">Export Files</span>
+        </a>
+      </li>
+
       Select Run Configuration
 
       <!-- checkbox -->
@@ -793,6 +821,24 @@ $( ".logo" ).click(function() {
 setTimeout(function() {
   initactionList();
 }, 1000);
+
+if ($(window).width() < 1280) {
+  alert('Minimum window size(width) supported is 1280px');
+  $("body").addClass("sidebar-collapse");
+}
+else {
+}
+
+window.onresize = function() {
+  if ($(window).width() < 1280) {
+//    alert('Minimum window size(width) supported is 1280px');
+    $("body").addClass("sidebar-collapse");
+  }
+  if ($(window).width() < 1000) {
+    alert('Application not supported below window size(width) 1024px');
+  }
+}
+
 </script>
 
 </body>

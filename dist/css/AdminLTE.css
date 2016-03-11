@@ -229,7 +229,7 @@ a:focus {
 }
 .main-header .navbar-custom-menu,
 .main-header .navbar-right {
-  float: right;
+  float: left;
 }
 @media (max-width: 991px) {
   .main-header .navbar-custom-menu a,

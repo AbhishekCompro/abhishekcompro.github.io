@@ -407,7 +407,19 @@ try{
 });
 
 $( "#run-conf-sidebar" ).click(function() {
-    $("body").addClass("sidebar-collapse");
+
+
+    var currentMargin = $(".content").css('margin-right');
+
+    if(currentMargin != 280)
+    {
+        $(".content").css({'margin-right': '280px'});
+
+    }
+    else{
+        $(".content").css({'margin-right': 'auto'});
+    }
+
     renderRunConfiguration();
 });
 
