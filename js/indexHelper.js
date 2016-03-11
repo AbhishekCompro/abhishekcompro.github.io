@@ -39,7 +39,7 @@ console.log('***** ' + clickedAddMethodNodeDataTree.item);
     a.action = 1;
     updateBreadcrum(a);
 
-    el.append('<li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":""}\' class="active treeview method-node">    <a href="#"><i class="fa fa-circle-o"></i> Method '+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+' <span href="#" class="reorder-up"><i class="fa fa-fw fa-arrow-up"></i></span><span href="#" class="reorder-down"><i class="fa fa-fw fa-arrow-down"></i></span> <i class="fa fa-angle-left pull-right"></i>    <span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>    </a>    <ul class="treeview-menu action-tree">    <li data-tree=\'{"item":"' + parseInt(clickedAddMethodNodeDataTree.item) + '","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="action-node active">    <a href="#"><i class="fa fa-circle-o"></i> Action 1 <span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span></a>    </li>    <li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>Add New Action</span></a></li>    </ul>    </li>');
+    el.append('<li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":""}\' class="active treeview method-node">    <a href="#"><i class="fa fa-circle-o"></i> Method '+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+' <span href="#" class="reorder-up pull-right" style="padding-right:70px"><i class="fa fa-fw fa-arrow-up"></i></span><span href="#" class="reorder-down pull-right" style="padding-right:40px"><i class="fa fa-fw fa-arrow-down"></i></span> <i class="fa fa-angle-left pull-right"></i>    <span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>    </a>    <ul class="treeview-menu action-tree" style="display: none;">    <li data-tree=\'{"item":"' + parseInt(clickedAddMethodNodeDataTree.item) + '","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="action-node active">    <a href="#"><i class="fa fa-circle-o"></i> Action 1 <span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span></a>    </li>    <li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>Add New Action</span></a></li>    </ul>    </li>');
 
 }
 
@@ -107,7 +107,7 @@ $('.sidebar-menu').on('click', '.method-node', function(e) {
     var clickedAddActionNodeDataTree = targetNode.data('tree');
     updateBreadcrum(clickedAddActionNodeDataTree);
 
-    $('.method-node').removeClass('active');
+    //$('.method-node').removeClass('active');
     el.addClass( 'active' );
     //e.stopPropagation();
 });
