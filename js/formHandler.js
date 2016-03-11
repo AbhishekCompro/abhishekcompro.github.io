@@ -114,6 +114,9 @@ try{
             var currentActionNode = taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1].actions[currentActionNumber-1];
             $('.functionDisplayName').text(taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1].actions[currentActionNumber-1].syntax);
 
+            var actionNodeFunction =  (taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1].actions[currentActionNumber-1].syntax).trim().replace(/ *\([^)]*\) */g, "");
+            $(".functionDisplayName").attr('name', actionNodeFunction + '()');
+
             updateDetailsForm( currentActionNode.syntax , currentActionNode.values );
         }
         else{
