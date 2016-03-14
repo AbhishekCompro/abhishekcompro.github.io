@@ -232,6 +232,7 @@ var actionList = {
 console.log(actionList.excel.length);
 
 var initactionList = function(){
+    $("#layout-skins-list tbody").empty();
 
 /*    for(var i=0;i<actionList.action.length;i++){
 
