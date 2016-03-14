@@ -42,8 +42,11 @@
     }
 
   </style>
+
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" id="_body">
+
+
 
 <div class="wrapper">
 
@@ -81,7 +84,7 @@
               </a>
             </div>
           </li>
-          <li class="dropdown user user-menu" style="width: 200px; margin: 5px 10px">
+          <li class="dropdown user user-menu" style="width: 120px; margin: 5px 10px">
             <div class="form-group">
               <button id="saveTaskDetails" type="button" class="btn btn-info pull-left">Save / Update</button>
             </div>
@@ -822,21 +825,43 @@ setTimeout(function() {
   initactionList();
 }, 1000);
 
-if ($(window).width() < 1280) {
-  alert('Minimum window size(width) supported is 1280px');
-  $("body").addClass("sidebar-collapse");
+if ($(window).width() < 1000) {
+//  alert('Minimum window size(width) supported is 1280px');
+  $( ".wrapper" ).hide( "slow", function() {
+    $( "body").append('<p style="padding: 50px" id="tempPara">Minimum window size(width) supported is 1280px</p>');
+//      alert( 'Minimum window size(width) supported is 1280px' );
+  });
 }
 else {
+  $("#tempPara").remove();
+  $( ".wrapper" ).show( "slow", function() {
+  });
 }
 
+if ($(window).width() < 1280) {
+  $("body").addClass("sidebar-collapse");
+}
+
+
 window.onresize = function() {
-  if ($(window).width() < 1280) {
-//    alert('Minimum window size(width) supported is 1280px');
+  if ($(window).width() < 1000) {
+//  alert('Minimum window size(width) supported is 1280px');
+    $( ".wrapper" ).hide( "slow", function() {
+      $("#tempPara").remove();
+      $( "body").append('<p style="padding: 50px" id="tempPara">Minimum window size(width) supported is 1280px</p>');
+//      alert( 'Minimum window size(width) supported is 1280px' );
+    });
+  }
+  else {
+    $("#tempPara").remove();
+    $( ".wrapper" ).show( "slow", function() {
+    });
+  }
+
+ if ($(window).width() < 1280) {
     $("body").addClass("sidebar-collapse");
   }
-  if ($(window).width() < 1000) {
-    alert('Application not supported below window size(width) 1024px');
-  }
+
 }
 
 </script>
