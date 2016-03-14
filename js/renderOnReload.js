@@ -8,12 +8,19 @@ var _addMethod = function(item){
     $('.item-node').eq((parseInt(item) - 1)).find('.add-method').click()
 };
 
-var _addAction = function(item,method,action,actionName){
+var _addAction = function(item,method,action,actionName,isLastAction){
 
     if(action !==1){
         $('.item-node').eq((parseInt(item) - 1)).find('.method-node').eq((parseInt(method) - 1)).find('.add-action').click();
     }
-    $('.item-node').eq((parseInt(item) - 1)).find('.method-node').eq((parseInt(method) - 1)).find('.action-node').eq((parseInt(action) - 1)).find('a').html('<i class="fa fa-circle-o"></i>' + actionName);
+
+    if(isLastAction){
+        $('.item-node').eq((parseInt(item) - 1)).find('.method-node').eq((parseInt(method) - 1)).find('.action-node').eq((parseInt(action) - 1)).find('a').html('<i class="fa fa-circle-o"></i>' + actionName);
+    }
+    else{
+        $('.item-node').eq((parseInt(item) - 1)).find('.method-node').eq((parseInt(method) - 1)).find('.action-node').eq((parseInt(action) - 1)).find('a').html('<i class="fa fa-circle-o"></i>' + actionName +'<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
+    }
+
 };
 
 var renderTreeFromLsm = function(){
@@ -35,9 +42,10 @@ for(var i=0;i<taskData.items.length;i++){
                     _addMethod(i+1);
                 }
                 for (var k = 0; k < taskData.items[i].methods[j].actions.length; k++) {
+                    var isLastAction = (k == (taskData.items[i].methods[j].actions.length -2));
                     if (taskData.items[i].methods[j].actions[k].init) {
 
-                            _addAction(i+1,j+1,k+1,taskData.items[i].methods[j].actions[k].name);
+                            _addAction(i+1,j+1,k+1,taskData.items[i].methods[j].actions[k].name,isLastAction);
                     }
                 }
             }

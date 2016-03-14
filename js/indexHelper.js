@@ -39,7 +39,7 @@ console.log('***** ' + clickedAddMethodNodeDataTree.item);
     a.action = 1;
     updateBreadcrum(a);
 
-    el.append('<li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":""}\' class="active treeview method-node">    <a href="#"><i class="fa fa-circle-o"></i> Method '+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+' <span href="#" class="reorder-up pull-right" style="padding-right:70px"><i class="fa fa-fw fa-arrow-up"></i></span><span href="#" class="reorder-down pull-right" style="padding-right:40px"><i class="fa fa-fw fa-arrow-down"></i></span> <i class="fa fa-angle-left pull-right"></i>    <span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>    </a>    <ul class="treeview-menu action-tree" style="display: none;">    <li data-tree=\'{"item":"' + parseInt(clickedAddMethodNodeDataTree.item) + '","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="action-node active">    <a href="#"><i class="fa fa-circle-o"></i> Action 1 <span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span></a>    </li>    <li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>Add New Action</span></a></li>    </ul>    </li>');
+    el.append('<li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":""}\' class="active treeview method-node">    <a href="#"><i class="fa fa-circle-o"></i> Method '+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+' <span href="#" class="reorder-up pull-right" style="padding-right:70px"><i class="fa fa-fw fa-arrow-up"></i></span><span href="#" class="reorder-down pull-right" style="padding-right:40px"><i class="fa fa-fw fa-arrow-down"></i></span> <i class="fa fa-angle-left pull-right"></i>    <span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>    </a>    <ul class="treeview-menu action-tree" style="display: none;">    <li data-tree=\'{"item":"' + parseInt(clickedAddMethodNodeDataTree.item) + '","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="action-node active">    <a href="#"><i class="fa fa-circle-o"></i> Action 1 <span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span></a>    </li>    <li data-tree=\'{"item":"'+parseInt(a.item)+'","method":"'+(parseInt(clickedAddMethodNodeDataTree.method) + 1)+'","action":"1"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>New Action</span></a><a href="#" class="copy-action"><i class="fa fa-copy text-lime"></i> <span>Copy Last Action</span></a></li>    </ul>    </li>');
 
 }
 
@@ -83,7 +83,7 @@ $('.sidebar-menu').on('click', '.add-action', function(e) {
     addNewAction(actionTree,clickedAddActionNodeDataTree);
     el.prev().find('.delete-action-node').remove();
     el.remove();
-    actionTree.append('<li data-tree=\'{"item":"'+(parseInt(clickedAddActionNodeDataTree.item))+'","method":"'+(parseInt(clickedAddActionNodeDataTree.method))+'","action":"'+(parseInt(clickedAddActionNodeDataTree.action) + 1)+'"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>Add New Action</span></a></li>');
+    actionTree.append('<li data-tree=\'{"item":"'+(parseInt(clickedAddActionNodeDataTree.item))+'","method":"'+(parseInt(clickedAddActionNodeDataTree.method))+'","action":"'+(parseInt(clickedAddActionNodeDataTree.action) + 1)+'"}\' class="add-action"><a href="#"><i class="fa fa-plus-square-o text-lime"></i> <span>New Action</span></a><a href="#" class="copy-action"><i class="fa fa-copy text-lime"></i> <span>Copy Last Action</span></a></li>');
     e.stopPropagation();
 });
 
@@ -193,4 +193,23 @@ $('.sidebar-menu').on('click', '.delete-method-node', function(e) {
 
     delete taskData.items[parseInt(currentAddMethodData.item)-1].methods[parseInt(currentAddMethodData.method)-1];
     e.stopPropagation();
+});
+
+
+$('.sidebar-menu').on('click', '.copy-action', function(e) {
+
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
+
+    var el = $(this).parent();
+    var clickedAddActionNodeDataTree = el.data('tree');
+
+    addValue(taskData.items[parseInt(clickedAddActionNodeDataTree.item)-1].methods[parseInt(clickedAddActionNodeDataTree.method)-1],'actions', (parseInt(clickedAddActionNodeDataTree.action)) ,taskData.items[parseInt(clickedAddActionNodeDataTree.item)-1].methods[parseInt(clickedAddActionNodeDataTree.method)-1].actions[parseInt(clickedAddActionNodeDataTree.action)-1]);
+    localStorage.setItem('taskData', JSON.stringify(taskData));
+
+    var currentAction = taskData.items[parseInt(clickedAddActionNodeDataTree.item)-1].methods[parseInt(clickedAddActionNodeDataTree.method)-1].actions[parseInt(clickedAddActionNodeDataTree.action)-1];
+
+    $('.item-node').eq((parseInt(clickedAddActionNodeDataTree.item) - 1)).find('.method-node').eq((parseInt(clickedAddActionNodeDataTree.method) - 1)).find('.add-action').click();
+
+        $('.item-node').eq(parseInt(clickedAddActionNodeDataTree.item)-1).find('.method-node').eq(parseInt(clickedAddActionNodeDataTree.method)-1).find('.action-node').eq(parseInt(clickedAddActionNodeDataTree.action)).html('<a href="#"><i class="fa fa-circle-o"></i>'+currentAction.name+'<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span></a>');
+
 });

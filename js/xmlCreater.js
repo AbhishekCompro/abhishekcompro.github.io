@@ -7,7 +7,7 @@ var taskDataToXMl = function(){
 
     taskData =   JSON.parse(localStorage.getItem('taskData'));
 
-    var xmlPre = '<?xml version="1.0" encoding="UTF-8"?><Task id="'+ taskData.id +'" name="'+ taskData.name +'">  <description>'+ taskData.description +'</description>  <friendlyTaskID>'+ taskData.id + taskData.scenario +'</friendlyTaskID>  <scenario name="'+ taskData.scenario +'">';
+    var xmlPre = '<?xml version="1.0" encoding="UTF-8"?><Task id="'+ taskData.id +'" name="'+ taskData.name +'">  <description>'+ taskData.description +'</description>  <friendlyTaskID>'+ taskData.id +'.'+ taskData.scenario +'</friendlyTaskID>  <scenario name="'+ taskData.scenario +'">';
 
     var xmlPost =   '</scenario>    </Task>';
 

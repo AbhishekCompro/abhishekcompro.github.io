@@ -7,7 +7,7 @@ var jsonToFile = function(){
 
     var taskData =   JSON.parse(localStorage.getItem('taskData'));
 
-    var jsonFilename = taskData.id + '.json';
+    var jsonFilename = taskData.id + '.'+ taskData.scenario + '.json';
 
     download(new Blob([JSON.stringify(taskData)]), jsonFilename, "text/plain");
 
