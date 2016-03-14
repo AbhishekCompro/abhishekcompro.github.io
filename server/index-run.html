@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Qlet Admin - server</title>
+    <title>QA Admin - server</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="./dependencies/css/bootstrap.min.css">
@@ -100,7 +100,7 @@
             <li class="header">CONTENTS</li>
             <li class="active"><a href="#introduction"><i class="fa fa-circle-o"></i> Run</a></li>
             <!--<li><a href="#download"><i class="fa fa-circle-o"></i> Download</a></li>-->
-              <li><a href="#advice"><i class="fa fa-circle-o"></i> Configuration</a></li>
+              <li><a href="http://localhost" target="_blank"><i class="fa fa-circle-o"></i> Configuration</a></li>
               <!--<li><a href="#advice2"><i class="fa fa-circle-o"></i> Svn Config</a></li>-->
           </ul>
         </div>
@@ -148,7 +148,7 @@
   </p>
 
 
-  <pre style="background-color: #353535; color: white; height: 600px" class="hierarchy bring-up"><code class="language-bash" data-lang="bash" id="run-logs">Run Logs
+  <pre id="scrollArea" style="background-color: #353535; color: white; height: 600px" class="hierarchy bring-up"><code class="language-bash" data-lang="bash" id="run-logs">Run Logs
 
 
   </code></pre>
@@ -261,7 +261,10 @@
     <script src="./dependencies/writeFiles.js"></script>
 
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+
+
     <script>
+
 /*        var ab2str = function ab2str(buf) {
             return String.fromCharCode.apply(null, new Uint16Array(buf));
         };*/
@@ -279,7 +282,7 @@
             var oldVal = document.getElementById('run-logs').innerHTML;
             document.getElementById('run-logs').innerHTML = oldVal + data.n;
 
-            var textarea = document.getElementById('run-logs');
+            var textarea = document.getElementById('scrollArea');
             textarea.scrollTop = textarea.scrollHeight;
 
             socket.emit( 'message', {received: 'received'} );

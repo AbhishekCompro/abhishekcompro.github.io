@@ -21,7 +21,7 @@ At the top of the testing using selenium framework, this tool provides:<br />
 4. Click launch<br />
 
 Pre-requisites:<br />
-1. Download runner server (https://goo.gl/WD98Vq)<br />
+1. Download runner server (https://goo.gl/wlEiHH)<br />
 2. Extract the files & Start the server using "RunnerLauncher.exe"<br />
 3. Checkout selenium framework code from svn<br />
 4. Launch http://localhost<br />

@@ -3,7 +3,8 @@ var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-var _localSrcBasepath = 'S:\\sims-2016-svn\\sim5office16\\src';
+var _localSrcBasepath = '';
+//var _localSrcBasepath = 'S:\\sims-2016-svn\\sim5office16\\src';
 var _taskXmlPath = '';  // \\SKL16\\AC\\02\\01.08.T1
 var _appName = '';  // access
 
@@ -234,18 +235,24 @@ app.get('/renderContentDist',function(req,res){
 
 app.get('/launchTest',function(req,res){
   console.log("inside launchtest");
-  exec('runTest.bat', function(error, stdout, stderr) {
+/*  exec('runTest.bat', function(error, stdout, stderr) {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
       console.log('exec error: ' + error);
     }
-  });
+  });*/
 
-  ls = process.spawn('runTest.bat');
+  var options = { cwd: _localSrcBasepath.replace('src',''),
+    env: process.env
+  }
+
+  ls = process.spawn('cmd.exe', ['/c', 'mvn clean compile test'], options);
+
+
 
   ls.stdout.on('data', function(data){
-    console.log('tt')
+    //console.log('tt')
     io.emit('stream', {n:ab2str(data)});
     //io.sockets.on('connection', function (socket) {
     //io.sockets.broadcast.emit('stream', {n:data});
