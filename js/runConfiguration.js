@@ -411,13 +411,14 @@ $( "#run-conf-sidebar" ).click(function() {
 
     var currentMargin = $(".content").css('margin-right');
 
-    if(currentMargin != 280)
+    if(currentMargin != '280px')
     {
         $(".content").css({'margin-right': '280px'});
 
     }
     else{
-        $(".content").css({'margin-right': 'auto'});
+        console.log('inside else');
+        $(".content").css({'margin-right': '0px'});
     }
 
     renderRunConfiguration();
