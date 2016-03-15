@@ -60,6 +60,7 @@ var actionList = {
     action  :   [],
 
     excel   :   [
+        "clickAt1(String elementName, int pos)",
         "clickAt(String elementName, int pos)",
         "clickAtPercent(String elementName, int xposPercent, int yposPercent)",
         "rightClickOnCell(String cell)",
