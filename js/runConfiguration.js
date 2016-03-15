@@ -114,13 +114,17 @@ var taskRunDataToXMl = function(){
                 if(taskData.items[i].methods[j].init){
                     taskDataPre = taskDataPre + '<Method group="'+taskData.items[i].methods[j].group+'" name="'+taskData.items[i].methods[j].type+'" sno="'+(j+1)+'"><Actions>';
 
-                    for(var k=0;k<taskData.items[i].methods[j].actions.length;k++){
+                    var methodChecked = $('input[name="item'+(i+1)+'-method"]:checked', '#item'+(i+1)+'-methods').data('method');
+
+                    for(var k=0; k<taskData.items[i].methods[j].actions.length; k++){
                         if(taskData.items[i].methods[j].actions[k].init){
 
                             if(i>0 && jin==0){
                                 if(taskData.items[i-1].skip == true){
+                                    if(methodChecked == (j+1)){
                                         jin=1;
                                         taskDataPre = taskDataPre + '<Action sno="'+(k+1)+'"><actionType name="skiptonextitem"></actionType></Action>';
+                                    }
                                 };
                             }
                             taskDataPre = taskDataPre + '<Action sno="'+(k+jin+1)+'"><actionType name="'+(taskData.items[i].methods[j].actions[k].name).toString().trim().replace("()","")+'">';
@@ -428,7 +432,7 @@ var pathwayListData = [];
 
 var addToPathway = function(){
 
-        if(localStorage.getItem('pathwayListData')){
+    if(localStorage.getItem('pathwayListData') != 'undefined'){
 
             pathwayListData = JSON.parse(localStorage.getItem('pathwayListData'));
         }
