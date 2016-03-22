@@ -101,7 +101,7 @@ $('.sidebar-menu').on('click', '.item-node', function(event) {
 
 $('.sidebar-menu').on('click', '.method-node', function(e) {
     //console.log($(event.target).parent().attr('class'));
-    var targetNode = $(event.target).parent();
+    var targetNode = $(e.target).parent();
 
     var el = $(this);
     var clickedAddActionNodeDataTree = targetNode.data('tree');
@@ -114,7 +114,7 @@ $('.sidebar-menu').on('click', '.method-node', function(e) {
 
 $('.sidebar-menu').on('click', '.action-node', function(e) {
     //console.log($(event.target).parent().attr('class'));
-    var targetNode = $(event.target).parent();
+    var targetNode = $(e.target).parent();
 
 /*    console.log($(this).index());
     console.log(targetNode.parent().find('li').size());
@@ -178,7 +178,7 @@ $('.sidebar-menu').on('click', '.delete-method-node', function(e) {
 
     //todo: delete data from lsm
 
-    methodTree.prev().find('a').append('<span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>');
+    methodTree.prev().find('a').first().append('<span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>');
 
     var currentAddMethodData = methodTree.next().data('tree');
 
