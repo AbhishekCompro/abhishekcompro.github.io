@@ -207,7 +207,14 @@ var initCurrentMethodData = function(callback){
     var methodType = $('#method-type').val();
     var methodGroup = $('#method-group').val();
 
-    if(taskData.init){
+	currentMethodDetails = {
+        init: false,
+        type:'',
+        group:'',
+        actions:[]
+    };
+
+	if(taskData.init){
 
         currentMethodDetails.type = methodType;
         currentMethodDetails.group = methodGroup;
@@ -252,6 +259,12 @@ var saveMethodData = function(){
 var initCurrentActionData = function(callback){
 
     var actionDetailsForm = $('#actionDetailsForm');
+	
+	currentActionDetails = {
+        init: 'false',
+        name: '',
+        values: []
+    };
 
     if(taskData.items[parseInt(currentItemNumber)-1].methods[parseInt(currentMethodNumber)-1]){
 
