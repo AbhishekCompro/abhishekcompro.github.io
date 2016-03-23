@@ -147,8 +147,6 @@ $('.sidebar-menu').on('click', '.delete-action-node', function(e) {
 
     var actionTree = el.parent().parent('.action-node');
 
-    //todo: delete data from lsm
-
     actionTree.prev().find('a').append('<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
 
     var currentAddActionData = $(this).parent().parent().parent().parent().data('tree');
@@ -164,7 +162,10 @@ $('.sidebar-menu').on('click', '.delete-action-node', function(e) {
     updateBreadcrum({"item":"","method":"","action":""});
     actionTree.remove();
 
-    delete taskData.items[parseInt(currentAddActionData.item)-1].methods[parseInt(currentAddActionData.method)-1].actions[parseInt(currentAddActionData.action)-1];
+    taskData.items[parseInt(currentAddActionData.item)-1].methods[parseInt(currentAddActionData.method)-1].actions.splice(parseInt(currentAddActionData.action)-1, 1);
+	
+	localStorage.setItem('taskData', JSON.stringify(taskData));
+	
     e.stopPropagation();
 });
 
@@ -176,14 +177,9 @@ $('.sidebar-menu').on('click', '.delete-method-node', function(e) {
 
     var methodTree = el.parent().parent('.method-node');
 
-    //todo: delete data from lsm
-
     methodTree.prev().find('a').first().append('<span class="label pull-right bg-red delete-method-node"><i class="fa fa-times"></i></span>');
 
     var currentAddMethodData = methodTree.next().data('tree');
-
-    // todo - update taskData & LSM
-    //currentAddMethodData
 
     var updatedAddMethodData = {"item":currentAddMethodData.item,"method":(parseInt(currentAddMethodData.method) - 1),"action":""};
     methodTree.next().data('tree', updatedAddMethodData);
@@ -191,7 +187,10 @@ $('.sidebar-menu').on('click', '.delete-method-node', function(e) {
     updateBreadcrum({"item":"","method":"","action":""});
     methodTree.remove();
 
-    delete taskData.items[parseInt(currentAddMethodData.item)-1].methods[parseInt(currentAddMethodData.method)-1];
+    taskData.items[parseInt(currentAddMethodData.item)-1].methods.splice(parseInt(currentAddMethodData.method)-1, 1);
+	
+	localStorage.setItem('taskData', JSON.stringify(taskData));
+	
     e.stopPropagation();
 });
 
