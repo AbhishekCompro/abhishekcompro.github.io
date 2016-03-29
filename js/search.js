@@ -64,7 +64,7 @@ var actionList = {
         "clickAtPercent(String elementName, int xposPercent, int yposPercent)",
         "rightClickOnCell(String cell)",
         "selectCell(String cell)",
-        "selectCellRange(String range, Method Method)",
+        "selectCellRange(String cellRange, Method methodType)",
         "selectColumn(String columnName)",
         "selectRow(int rowNumber)",
         "selectMultiParaText(String elementNameStart, String elementNameEnd, int Start, int End, Method method)",
