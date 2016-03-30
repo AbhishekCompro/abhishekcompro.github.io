@@ -55,16 +55,43 @@ var fillTaskDetails = function(){
 };
 
 var fillMethodDetails = function(){
+    console.log('inside fill method details')
 
     if(taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1]){
-        $('#method-type').val(taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1].type);
+        var techGroups = document.getElementById("method-type");
+        $('select#method-type option').removeAttr("selected");
+
+        var selectedGroups = taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1].type.split(',');
+
+        console.log('selectedGroups.length '+selectedGroups.length);
+        console.log(selectedGroups)
+
+        for (var i = 0; i < techGroups.options.length; i++) {
+            for (var j = 0; j < selectedGroups.length; j++) {
+                if (techGroups.options[i].value == selectedGroups[j]) {
+                    techGroups.options[i].selected = true;
+                }
+            }
+        }
     }
     else{
         $('#method-type').val('');
     };
 
     if(taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1]){
-        $('#method-group').val(taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1].group);
+        var techGroups = document.getElementById("method-group");
+
+        $('select#method-group option').removeAttr("selected");
+
+        var selectedGroups = taskDataFilled.items[currentItemNumber-1].methods[currentMethodNumber-1].group.split(',');
+
+        for (var i = 0; i < techGroups.options.length; i++) {
+            for (var j = 0; j < selectedGroups.length; j++) {
+                if (techGroups.options[i].value == selectedGroups[j]) {
+                    techGroups.options[i].selected = true;
+                }
+            }
+        }
     }
     else{
         $('#method-group').val('');
@@ -101,7 +128,7 @@ var updateDetailsForm = function(functionSyntax, userInputArray){
         }catch(e){
 
         }
-
+    $('#saveActionButton').show();
 };
 
 
@@ -135,7 +162,7 @@ try{
 
 
 var refreshForm = function(){
-    console.log('reset form')
+    $('#saveActionButton').hide();
     updateCurrent(function(){
         if(taskDataFilled){
             fillTaskDetails();
@@ -143,7 +170,7 @@ var refreshForm = function(){
             fillActionDetails();
         }
     });
-}
+};
 
 $( '.sidebar-menu' ).click(function() {
     refreshForm();
@@ -154,5 +181,103 @@ updateCurrent(function(){
 });
 
 
+var renderCurrentActionList = function(){
 
-// todo: reset form fields if no data exist for that node
+    var currentActionList = [];
+
+    console.log('currentItemNumber: ' +currentItemNumber);
+    console.log('currentMethodNumber: '+currentMethodNumber);
+
+
+    $("#layout-skins-list1 tbody").empty();
+
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
+
+    if(taskData.items[currentItemNumber - 1].init){
+
+        if(taskData.items[currentItemNumber - 1].methods[currentMethodNumber-1]) {
+            if (taskData.items[currentItemNumber - 1].methods[currentMethodNumber - 1].init) {
+
+                for (var k = 0; k < taskData.items[currentItemNumber - 1].methods[currentMethodNumber - 1].actions.length; k++) {
+
+                    if (taskData.items[currentItemNumber - 1].methods[currentMethodNumber - 1].actions[k]) {
+
+                        if (taskData.items[currentItemNumber - 1].methods[currentMethodNumber - 1].actions[k].init) {
+
+                            var functionName = taskData.items[currentItemNumber - 1].methods[currentMethodNumber - 1].actions[k].name.replace(')', '');
+
+                            for (var l = 0; l < taskData.items[currentItemNumber - 1].methods[currentMethodNumber - 1].actions[k].values.length; l++) {
+
+                                functionName = functionName + taskData.items[currentItemNumber - 1].methods[currentMethodNumber - 1].actions[k].values[l].actVal + ' , ';
+                            }
+
+                            functionName = functionName.replace(/,([^,]*)$/, '' + '$1');
+                            functionName = functionName + ')';
+
+                            currentActionList.push(functionName);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+        for(var i=0;i<currentActionList.length;i++){
+
+            $("#layout-skins-list1 tbody").append('                <tr class="action-details-button">                  <td><code>'+currentActionList[i]+'</code></td></tr>')
+        }
+};
+
+$('.action-details-section').hide();
+$('.method-details-section').hide();
+
+$('.sidebar-menu').on('click', '.method-node', function(e) {
+
+    $('.action-details-section').hide();
+    $('.method-details-section').show();
+
+    renderCurrentActionList();
+
+});
+
+$('.sidebar-menu').on('click', '.add-method a', function(e) {
+
+    $('.action-details-section').hide();
+    $('.method-details-section').show();
+
+    renderCurrentActionList();
+
+});
+
+
+$('.sidebar-menu').on('click', '.action-node', function(e) {
+
+    $('.method-details-section').hide();
+    $('.action-details-section').show();
+
+    renderCurrentActionList();
+
+});
+
+$('.item-node a').click(function(e) {
+
+    if (e.target !== this)
+        return;
+
+    $('.method-details-section').hide();
+    $('.action-details-section').hide();
+
+    renderCurrentActionList();
+});
+
+$('#saveActionButton').click(function(e){
+    renderCurrentActionList();
+});
+
+
+/*
+$('.reorder-up, .reorder-down').click(function(e){
+    updateDetailsForm();
+    renderCurrentActionList();
+});
+*/

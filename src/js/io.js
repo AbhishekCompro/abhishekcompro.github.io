@@ -204,17 +204,27 @@ var saveTaskData = function(){
 
 var initCurrentMethodData = function(callback){
 
-    var methodType = $('#method-type').val();
-    var methodGroup = $('#method-group').val();
 
-	currentMethodDetails = {
+        var rr1 = [];
+        $('#method-type :selected').each(function(i, selected){
+            rr1[i] = $(selected).text();
+        });
+    var methodType =  rr1.toString();
+
+        var rr2 = [];
+        $('#method-group :selected').each(function(i, selected){
+            rr2[i] = $(selected).text();
+        });
+    var methodGroup = rr2.toString();
+
+    currentMethodDetails = {
         init: false,
         type:'',
         group:'',
         actions:[]
     };
 
-	if(taskData.init){
+    if(taskData.init){
 
         currentMethodDetails.type = methodType;
         currentMethodDetails.group = methodGroup;
@@ -259,8 +269,8 @@ var saveMethodData = function(){
 var initCurrentActionData = function(callback){
 
     var actionDetailsForm = $('#actionDetailsForm');
-	
-	currentActionDetails = {
+
+    currentActionDetails = {
         init: 'false',
         name: '',
         values: []
@@ -279,7 +289,12 @@ var initCurrentActionData = function(callback){
 
             if($('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).next('li').next('li').length == 0){
                 $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).find('.delete-action-node').remove();
-                $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).find('a').append('<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
+
+                if($('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).index() >0){
+
+                    $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).find('.action-node').eq(currentActionNumber -1).find('a').append('<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
+                }
+
             }
 
             // - ends

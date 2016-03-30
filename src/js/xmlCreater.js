@@ -33,7 +33,7 @@ var taskDataToXMl = function(){
             for(var j=0;j<taskData.items[i].methods.length;j++){
 
                 if(taskData.items[i].methods[j].init){
-                    taskDataPre = taskDataPre + '<Method group="'+taskData.items[i].methods[j].group+'" name="'+taskData.items[i].methods[j].group+'" sno="'+(j+1)+'"><Actions>';
+                    taskDataPre = taskDataPre + '<Method group="'+taskData.items[i].methods[j].group+'" name="'+taskData.items[i].methods[j].type+'" sno="'+(j+1)+'"><Actions>';
 
                     for(var k=0;k<taskData.items[i].methods[j].actions.length;k++){
 

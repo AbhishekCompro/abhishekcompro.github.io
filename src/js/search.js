@@ -3,10 +3,37 @@
  */
 
 /*$( ".sidebar" ).on( "click",'.treeview-menu,', function() {
-    $("#searchActions").val('');
+ $("#searchActions").val('');
+
+ // Retrieve the input field text and reset the count to zero
+ var filter = '', count = 0;
+
+ // Loop through the comment list
+ $("#layout-skins-list tbody tr").each(function(){
+
+ // If the list item does not contain the text phrase fade it out
+ if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+ $(this).fadeOut();
+
+ // Show the list item if the phrase matches and increase the count by 1
+ } else {
+ $(this).show();
+ count++;
+ }
+ });
+
+ // Update the count
+ var numberItems = count;
+ console.log("Number of Comments = "+count);
+ //event.stopPropagation();
+ });*/
+
+
+
+$("#searchActions").keyup(function(){
 
     // Retrieve the input field text and reset the count to zero
-    var filter = '', count = 0;
+    var filter = $(this).val(), count = 0;
 
     // Loop through the comment list
     $("#layout-skins-list tbody tr").each(function(){
@@ -25,84 +52,59 @@
     // Update the count
     var numberItems = count;
     console.log("Number of Comments = "+count);
-    //event.stopPropagation();
-});*/
+});
 
+actionList = {
 
-
-    $("#searchActions").keyup(function(){
-
-        // Retrieve the input field text and reset the count to zero
-        var filter = $(this).val(), count = 0;
-
-        // Loop through the comment list
-        $("#layout-skins-list tbody tr").each(function(){
-
-            // If the list item does not contain the text phrase fade it out
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).fadeOut();
-
-                // Show the list item if the phrase matches and increase the count by 1
-            } else {
-                $(this).show();
-                count++;
-            }
-        });
-
-        // Update the count
-        var numberItems = count;
-        console.log("Number of Comments = "+count);
-    });
-
-// todo - categorize action list
-var actionList = {
-
-    action  :   [],
+    action  : [],
 
     excel   :   [
+        "clickAndWait(String elementName)",
+        "selectCell(String cellName)",
+        "selectCellRange(String cellRange, Method methodType)",
+        "rightClickOnCell(String cellName)",
+        "doubleClick(String elementName)",
+        "rightClick(String elementName)",
+        "enterText(String text)",
+        "pressNreleaseKey(MyKeys keyName)",
+        "pressKey(MyKeys keyName)",
+        "releaseKey(MyKeys keyName)",
+        "waitFor()",
+        "release()",
+        "clickAndHold(String elementName)",
+        "moveByOffset(int xOffset, int yOffset)",
+        "moveToElementCenter(String elementName)",
+        "dragAndDropByPosBased(String draggable, int xpos, int ypos)",
         "clickAt(String elementName, int pos)",
         "clickAtPercent(String elementName, int xposPercent, int yposPercent)",
-        "rightClickOnCell(String cell)",
-        "selectCell(String cell)",
-        "selectCellRange(String cellRange, Method methodType)",
         "selectColumn(String columnName)",
         "selectRow(int rowNumber)",
-        "selectMultiParaText(String elementNameStart, String elementNameEnd, int Start, int End, Method method)",
-        "selectText(String elementName, int Start, int End, Method Method)",
+        "selectMultiParaText(String elementNameStart, String elementNameEnd, int Start, int End, Method methodType)",
+        "selectText(String elementName, int start, int end, Method methodType)",
         "click(String elementName)",
         "clickAtCurrentPos()",
         "clickAndHoldCurrentPos()",
-        "clickAndHold(String elementName)",
-        "clickAndWait(String elementName)",
         "doubleClickAndWait()",
-        "doubleClick(String elementName)",
         "rightClickCurrentPos()",
-        "rightClick(String elementName)",
         "dragAndDropBy(String source, String target)",
         "dragAndDropByOffset(String elementName, int xOffset, int yOffset)",
-        "enterText(String text)",
         "enterTextInElement(String elementName, String text)",
         "pressControlA()",
         "pressControlEND()",
         "pressControlENTER()",
         "pressControlHOME()",
-        "pressKey(MyKeys keyName)",
-        "pressNreleaseKey(MyKeys keyName)",
-        "releaseKey(MyKeys keyName)",
-        "moveByOffset(int xOffset, int yOffset)",
-        "moveToElementCenter(String elementName)",
-        "moveToElement(String elementName, int xOffset, int yOffset)",
+        "moveToElement(String moveToElement, int xOffset, int yOffset)",
         "moveToElementPercent(String elementName, double xOffsetPercent, double yOffsetPercent)",
-        "release(String elementName)",
-        "waitFor()",
+        "releaseElement(String elementName)",
         "waitForSec(int time)",
         "clearText(String elementName)",
         "scroll(String elementName)",
-        "selectFromDropdown(String elementName, String parameter)",
+        "selectFromDropdown(String elementName, String option)",
         "selectInputText(String elementName)",
-        "skipToNextItem()"]
+        "skipToNextItem()"
+    ]
     ,
-    word    :   [
+    word: [
         "clickAt(String elementName, int pos)",
         "clickAtPercent(String elementName, int xposPercent, int yposPercent)",
         "dragAndDropSlideInSlidePane(String firstSlide, String secondSlide)",
@@ -143,57 +145,61 @@ var actionList = {
         "selectFromDropdown(String elementName, String parameter)",
         "selectInputText(String elementName)",
         "skipToNextItem()"
-            ]
-    ,
-    ppt     :   [
-        "clickAt(String elementName, int pos)",
-        "clickAtPercent(String elementName, int xposPercent, int yposPercent)",
-        "dragAndDropSlideInSlidePane(String firstSlide, String secondSlide)",
-        "rightClickSlideInSlidePane(String slideNumber)",
-        "selectMultiParaText(String elementNameStart, String elementNameEnd, int Start, int End, Method methodType)",
-        "selectSlideFromSlidePane(String slideNumber)",
-        "selectText(String elementName, int start, int end, Method methodType)",
-        "click(String elementName)",
-        "clickAtCurrentPos()",
-        "clickAndHoldCurrentPos()",
-        "clickAndHold(String elementName)",
-        "clickAndWait(String elementName)",
-        "doubleClickAndWait()",
-        "doubleClick(String elementName)",
-        "rightClickCurrentPos()",
-        "rightClick(String elementName)",
-        "dragAndDropBy(String source, String target)",
-        "dragAndDropByOffset(String elementName, int xOffset, int yOffset)",
+    ],
+    ppt: [
         "enterText(String text)",
         "enterTextInElement(String elementName, String text)",
-        "pressControlA()",
-        "pressControlEND()",
-        "pressControlENTER()",
-        "pressControlHOME()",
+        "click(String elementName)",
         "pressKey(MyKeys keyName)",
         "pressNreleaseKey(MyKeys keyName)",
         "releaseKey(MyKeys keyName)",
+        "selectSlideFromSlidePane(String slideNumber)",
+        "rightClickSlideInSlidePane(String slideNumber)",
+        "dragAndDropSlideInSlidePane(String firstSlide, String secondSlide)",
+        "clickAt(String elementName, int pos)",
+        "clickAtCurrentPos()",
+        "clickAtPercent(String elementName, int xposPercent, int yposPercent)",
+        "selectFromDropdown(String elementName, String parameter)",
+        "selectInputText(String elementName)",
+        "selectText(String elementName, int start, int end, Method methodType)",
+        "selectMultiParaText(String elementNameStart, String elementNameEnd, int Start, int End, Method methodType)",
+        "doubleClick(String elementName)",
+        "doubleClickAndWait()",
+        "rightClick(String elementName)",
+        "rightClickCurrentPos()",
+        "clickAndHoldCurrentPos()",
+        "clickAndHold(String elementName)",
+        "clickAndWait(String elementName)",
+        "dragAndDropBy(String source, String target)",
+        "dragAndDropByOffset(String elementName, int xOffset, int yOffset)",
         "moveByOffset(int xOffset, int yOffset)",
         "moveToElementCenter(String elementName)",
         "moveToElement(String elementName, int xOffset, int yOffset)",
         "moveToElementPercent(String elementName, double xOffsetPercent, double yOffsetPercent)",
         "release()",
         "releaseElement(String elementName)",
+        "pressControlA()",
+        "pressControlEND()",
+        "pressControlENTER()",
+        "pressControlHOME()",
         "waitFor()",
         "waitForSec(int time)",
         "clearText(String elementName)",
         "scroll(String elementName)",
-        "selectFromDropdown(String elementName, String parameter)",
-        "selectInputText(String elementName)",
         "skipToNextItem()"
-                ]
-    ,
+    ],
     access  :   [
+        "click(String elementName)",
+        "rightClick(String elementName)",
+        "selectInputText(String elementName)",
+        "waitFor()",
+        "pressKey(MyKeys keyName)",
+        "pressNreleaseKey(MyKeys keyName)",
+        "releaseKey(MyKeys keyName)",
         "clickAt(String elementName, int pos)",
         "clickAtPercent(String elementName, int xposPercent, int yposPercent)",
         "selectMultiParaText(String elementNameStart, String elementNameEnd, int Start, int End, Method methodType)",
         "selectText(String elementName, int start, int end, Method methodType)",
-        "click(String elementName)",
         "clickAtCurrentPos()",
         "clickAndHoldCurrentPos()",
         "clickAndHold(String elementName)",
@@ -201,7 +207,6 @@ var actionList = {
         "doubleClickAndWait()",
         "doubleClick(String elementName)",
         "rightClickCurrentPos()",
-        "rightClick(String elementName)",
         "dragAndDropBy(String source, String target)",
         "dragAndDropByOffset(String elementName, int xOffset, int yOffset)",
         "enterText(String text)",
@@ -210,35 +215,29 @@ var actionList = {
         "pressControlEND()",
         "pressControlENTER()",
         "pressControlHOME()",
-        "pressKey(MyKeys keyName)",
-        "pressNreleaseKey(MyKeys keyName)",
-        "releaseKey(MyKeys keyName)",
         "moveByOffset(int xOffset, int yOffset)",
         "moveToElementCenter(String elementName)",
         "moveToElement(String elementName, int xOffset, int yOffset)",
         "moveToElementPercent(String elementName, double xOffsetPercent, double yOffsetPercent)",
         "release()",
         "releaseElement(String elementName)",
-        "waitFor()",
         "waitForSec(int time)",
         "clearText(String elementName)",
         "scroll(String elementName)",
-        "selectFromDropdown(String elementName, String parameter)",
-        "selectInputText(String elementName)",
+        "selectFromDropdown(String elementName, String option)",
         "skipToNextItem()"
     ]
 };
 
-console.log(actionList.excel.length);
 
 var initactionList = function(){
     $("#layout-skins-list tbody").empty();
 
-/*    for(var i=0;i<actionList.action.length;i++){
+    /*    for(var i=0;i<actionList.action.length;i++){
 
-        $("#layout-skins-list tbody").append('                <tr>                  <td><code>'+actionList.excel[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
+     $("#layout-skins-list tbody").append('                <tr>                  <td><code>'+actionList.excel[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
 
-    }*/
+     }*/
 
     var taskData =   JSON.parse(localStorage.getItem('taskData'));
 
@@ -262,7 +261,7 @@ var initactionList = function(){
 
         for(var i=0;i<filteredActionList.length;i++){
 
-            $("#layout-skins-list tbody").append('                <tr class="action-details-button">                  <td><code>'+filteredActionList[i]+'</code></td>                  <td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>                </tr>')
+            $("#layout-skins-list tbody").append('                <tr class="action-details-button">                  <td><code>'+filteredActionList[i]+'</code></td>                  <!--<td><a href="#" class="btn btn-primary btn-xs action-details-button"><i class="fa fa-eye"></i></a></td>-->                </tr>')
 
         }
 
@@ -276,12 +275,12 @@ var updateDetailsForm = function(){
 
     $('#layout-skins-list').on('click', '.action-details-button', function() {
         $("#actionDetailsForm").empty();
-    var el = $(this);
-    var clickedNodeText = el.find('code').text();
-    $(".functionDisplayName").text(clickedNodeText.trim());
+        var el = $(this);
+        var clickedNodeText = el.find('code').text();
+        $(".functionDisplayName").text(clickedNodeText.trim());
 
-    var actionNodeFunction =  clickedNodeText.trim().replace(/ *\([^)]*\) */g, "");
-    $(".functionDisplayName").attr('name', actionNodeFunction + '()');
+        var actionNodeFunction =  clickedNodeText.trim().replace(/ *\([^)]*\) */g, "");
+        $(".functionDisplayName").attr('name', actionNodeFunction + '()');
 
         var actionNodeArray ;
 
@@ -292,6 +291,8 @@ var updateDetailsForm = function(){
         }
         try{
             if(actionNodeArray){
+
+                $('#saveActionButton').show();
 
                 if(actionNodeArray.length >0){
 
@@ -314,15 +315,15 @@ var updateDetailsForm = function(){
         catch(e){console.log(e)}
 
 
-/*        var methodTree = el.parent().parent('.method-node');
+        /*        var methodTree = el.parent().parent('.method-node');
 
-        //todo: delete data from lsm
-        var removeLSMData = methodTree.data('tree');
-        console.log(removeLSMData);
+         //todo: delete data from lsm
+         var removeLSMData = methodTree.data('tree');
+         console.log(removeLSMData);
 
-        updateBreadcrum({"item":"","method":"","action":""});
+         updateBreadcrum({"item":"","method":"","action":""});
 
-        methodTree.remove();*/
+         methodTree.remove();*/
 
     });
 

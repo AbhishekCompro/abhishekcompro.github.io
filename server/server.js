@@ -247,7 +247,7 @@ app.get('/launchTest',function(req,res){
     env: process.env
   }
 
-  ls = process.spawn('cmd.exe', ['/c', 'mvn clean compile test'], options);
+  ls = process.spawn('cmd.exe', ['/c', 'mvn test'], options);
 
 
 

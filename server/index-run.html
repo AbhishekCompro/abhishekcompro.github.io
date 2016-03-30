@@ -293,15 +293,20 @@
 setTimeout(function(){
 
     $.get('/renderContent', function(data) {
-        $( "#header-items" ).show();
+
         console.log(data);
-        $( ".loader-div").remove();
+
         $( "#xmlData").text(data.xmldata)
         $( "#javaData").text(data.javadata)
         $( "#javaFileName").text(data.javaFilename)
 
         $.get('/generateTestFiles', function(data) {
             console.log(data);
+            setTimeout(function(){
+                $( "#header-items" ).show();
+                $( ".loader-div").remove();
+            }, 2000);
+
         });
 
     });

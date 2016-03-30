@@ -321,7 +321,12 @@ var getPathwayJava = function(){
 
 
     // start iterate
-    var pathwayListData = JSON.parse(localStorage.getItem('pathwayListData'));
+    var pathwayListData
+
+    if(localStorage.getItem('pathwayListData')){
+        pathwayListData = JSON.parse(localStorage.getItem('pathwayListData'));
+    }
+
     var runJFinal = preJ;
 
     var testCount = 0;
@@ -432,7 +437,7 @@ var pathwayListData = [];
 
 var addToPathway = function(){
 
-    if(localStorage.getItem('pathwayListData') != 'undefined'){
+    if(localStorage.getItem('pathwayListData')){
 
             pathwayListData = JSON.parse(localStorage.getItem('pathwayListData'));
         }
@@ -461,7 +466,6 @@ var addToPathway = function(){
     console.log(pathwayListData);
 
     pathwayListData.push(currentPathway);
-
 
     localStorage.setItem('pathwayListData', JSON.stringify(pathwayListData));
 

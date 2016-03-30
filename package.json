@@ -1,8 +1,8 @@
 {
-  "name": "abhishekcompro.github.io",
+  "name": "sim5runner.github.io",
   "version": "0.1.0",
-  "description": "Compro Automation engine",
-  "author": "Shipra",
+  "description": "Compro Automation - SIMS Runner Tool",
+  "author": "Compro",
   "main": "Gruntfile.js",
   "dependencies": {
     "grunt": "^0.4.5",

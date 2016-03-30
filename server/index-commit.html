@@ -420,9 +420,9 @@ setTimeout(function(){
 
     $.get('/renderContentDist', function(data) {
         console.log('renderContentDist')
-        $( "#header-items" ).show();
+
         console.log(data);
-        $( ".loader-div").remove();
+
         $( "#xmlData").text(data.xmlDist);
         $( "#javaData").text(data.javaDist);
         $( "#javaFileName").text(data.javaDistFilename);
@@ -434,6 +434,10 @@ setTimeout(function(){
         $.get('/generateTestFilesDist', function(data) {
             console.log('generateTestFilesDist')
             console.log(data);
+            setTimeout(function(){
+                $( "#header-items" ).show();
+                $( ".loader-div").remove();
+            }, 2000);
         });
 
     });
