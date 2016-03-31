@@ -224,7 +224,7 @@ var renderCurrentActionList = function(){
 
         for(var i=0;i<currentActionList.length;i++){
 
-            $("#layout-skins-list1 tbody").append('                <tr class="action-details-button">                  <td><code>'+currentActionList[i]+'</code></td></tr>')
+            $("#layout-skins-list1 tbody").append('                <tr class="action-details-button">                  <td><code>'+(i+1)+'. ' + currentActionList[i]+'</code></td></tr>')
         }
 };
 
