@@ -4,25 +4,12 @@
 var taskData;
 
 var taskDataToXMl = function(){
-	var suffix='';
-	var selectedType = '';
-	var methodCount = 0;
-	var methodTypeCount = {
-		"Ribbon" : 0,
-		"Keyboard" : 0,
-		"Toolbar" : 0,
-		"Mouse" : 0,
-		"Shortcut Menu" : 0,
-		"Other" : 0,
-		"Menu" : 0,
-		"Right - Click" : 0
-	};
+	
     taskData =   JSON.parse(localStorage.getItem('taskData'));
 
     var xmlPre = '<?xml version="1.0" encoding="UTF-8"?><Task id="'+ taskData.id +'" name="'+ taskData.name +'">  <description>'+ taskData.description +'</description>  <friendlyTaskID>'+ taskData.id +'.'+ taskData.scenario +'</friendlyTaskID>  <scenario name="'+ taskData.scenario +'">';
 
     var xmlPost =   '</scenario>    </Task>';
-
 
     var itemsInitCount = 0;
     for(var p=0;p<taskData.items.length;p++){
@@ -37,8 +24,21 @@ var taskDataToXMl = function(){
 
     for(var i=0;i<taskData.items.length;i++){
 
-
         if(taskData.items[i].init){
+			var suffix='';
+			var selectedType = '';
+			var methodCount = 0;
+			var methodTypeCount = {
+				"Ribbon" : 0,
+				"Keyboard" : 0,
+				"Toolbar" : 0,
+				"Mouse" : 0,
+				"Shortcut Menu" : 0,
+				"Other" : 0,
+				"Menu" : 0,
+				"Right - Click" : 0
+			};
+			
 
             taskDataPre = taskDataPre + '<Item sno="'+(i+1)+'">';
 
