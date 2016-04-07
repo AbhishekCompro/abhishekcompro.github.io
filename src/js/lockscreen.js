@@ -203,39 +203,42 @@ var MD5 = function (string) {
     return temp.toLowerCase();
 };
 
-sessionStorage.setItem("password", "fe70b41131e68b06d89f3bb3ebbac111");
+var d = new Date();
+var _pref = d.getDate().toString() + d.getMonth().toString();
+
+var password = _pref + "3b06187d758a373c667afbee82f00408";
+localStorage.setItem("password", password);
+var userPassword = _pref + localStorage.getItem("userPassword");
+if(userPassword === password){
+    window.location.href = './dashboard.html';
+}
 
 $( "#password-input-button" ).click(function() {
     var userPassword = $('#password-input').val();
 
     //save a value
-    sessionStorage.setItem("userPassword", MD5(userPassword).toString());
-    var password = JSON.parse(sessionStorage.getItem("password"));
+    localStorage.setItem("userPassword", MD5(userPassword).toString());
+    var password = JSON.parse(localStorage.getItem("password"));
 
-    if(userPassword === password){
+    if(_pref + userPassword === password){
         window.location.href = './index.html';
     }else{
         alert('Incorrect Password !')
     }
 });
 
-    $('.lockscreen-credentials').submit(function() {
-        var userPassword = $('#password-input').val().trim();
-        userPassword = MD5(userPassword);
+$('.lockscreen-credentials').submit(function() {
+    var userPassword = $('#password-input').val().trim();
+    userPassword = MD5(userPassword);
 
-        console.log("user pass: "+userPassword);
-        sessionStorage.setItem("userPassword", userPassword);
-        var password = sessionStorage.getItem("password");
+    localStorage.setItem("userPassword", userPassword);
+    var password = localStorage.getItem("password");
 
-        if(userPassword === password){
-            window.location.href = './dashboard.html';
-        }else{
-            alert('Incorrect Password');
-        }
-        return false;
-    });
+    if(_pref + userPassword === password){
+        window.location.href = './dashboard.html';
+    }else{
+        alert('Incorrect Password');
+    }
+    return false;
+});
 
-
-// temp
-
-setTimeout(function(){ alert('Experimental login screen, Use password: team-qa'); }, 2000);

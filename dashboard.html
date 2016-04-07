@@ -805,12 +805,16 @@ window.onresize = function() {
 </script>
 
 <script>
-  var password = sessionStorage.getItem("password");
-  var userPassword = sessionStorage.getItem("userPassword");
 
-  console.log("pass " + password + " user Pass : " + userPassword);
+  var d = new Date();
+  var _pref = d.getDate().toString() + d.getMonth().toString();
 
-  if((password === null) || (password === undefined) || (userPassword !== password)){
+  var password = localStorage.getItem("password");
+  var userPassword = localStorage.getItem("userPassword");
+
+  console.log(': ' + password  + ' : ' + userPassword);
+
+  if((password === null) || (password === undefined) || ( (_pref + userPassword) !== password)){
     window.location.href = './index.html';
   }
 </script>
