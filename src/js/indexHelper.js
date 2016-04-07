@@ -193,6 +193,7 @@ $('.sidebar-menu').on('click', '.delete-action-node', function(e) {
 });
 
 $('.sidebar-menu').on('click', '.delete-method-node', function(e) {
+	var taskData =   JSON.parse(localStorage.getItem('taskData'));
 
     $('.method-node').removeClass('active');
 
