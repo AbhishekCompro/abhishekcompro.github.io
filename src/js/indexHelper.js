@@ -71,9 +71,10 @@ $('.sidebar-menu').on('click', '.add-method', function(e) {
         var methodTree = el.parent('.method-tree');
         addNewMethod(methodTree, clickedAddMethodNodeDataTree);
         el.prev().find('.delete-method-node').remove();
+		el.parent().find('.duplicate-method').remove();
         el.remove();
 
-        methodTree.append('<li data-tree=\'{"item":"' + (parseInt(clickedAddMethodNodeDataTree.item)) + '","method":"' + (parseInt(clickedAddMethodNodeDataTree.method) + 1) + '","action":""}\' class="add-method"><a href="#"><i class="fa fa-plus-square-o text-aqua"></i> <span>Add New Method</span></a></li>');
+		methodTree.append('<li data-tree=\'{"item":"' + (parseInt(clickedAddMethodNodeDataTree.item)) + '","method":"' + (parseInt(clickedAddMethodNodeDataTree.method) + 1) + '","action":""}\' class="add-method"><a href="#"><i class="fa fa-plus-square-o text-aqua"></i> <span>Add New Method</span></a></li><li data-tree=\'{"item":"' + (parseInt(clickedAddMethodNodeDataTree.item)) + '","method":"' + (parseInt(clickedAddMethodNodeDataTree.method) + 1) + '","action":""}\' class="duplicate-method"><a href="#"><i class="fa fa-copy text-aqua"></i> <span>Duplicate Method</span></a></li>');
 
         $('.reorder-up, .reorder-down').hide();
         renderCurrentActionList();
@@ -218,6 +219,25 @@ $('.sidebar-menu').on('click', '.delete-method-node', function(e) {
 });
 
 
+$('.sidebar-menu').on('click', '.duplicate-method', function(e) {
+	
+	var el = $(this);
+	
+	var clickedMethodDataTree = el.data('tree');
+		
+	var elSelectedMethodNode = $('.method-node').filter('.active').index();
+
+    if(elSelectedMethodNode == -1){
+
+        var methodLength = $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).length;
+        elSelectedMethodNode = methodLength -1;
+    }
+	
+	copyMethod(currentItemNumber, elSelectedMethodNode, parseInt(clickedMethodDataTree.method));
+	el.remove();
+  
+});
+
 $('.sidebar-menu').on('click', '.copy-action', function(e) {
 
     var el = $(this).parent();
@@ -287,3 +307,55 @@ $('.sidebar-menu').on('click', '.action-node', function(e) {
     }
 });*/
 
+
+
+var copyMethod = function(selectedItem, selectedMethod, newMethodIndex){
+
+    var taskData =   JSON.parse(localStorage.getItem('taskData'));
+
+    /*
+    for updating data
+     */
+    addValue(taskData.items[parseInt(selectedItem)-1],'methods', (parseInt(newMethodIndex)) ,taskData.items[parseInt(selectedItem)-1].methods[parseInt(selectedMethod)]);
+    localStorage.setItem('taskData', JSON.stringify(taskData));
+
+
+    /*
+    for updating view
+     */
+    var _addAction1 = function(item,method,action,actionName,isLastAction){
+
+        if(action !==1){
+            $('.item-node').eq((parseInt(item) - 1)).find('.method-node').eq((parseInt(method) - 1)).find('.add-action').click();
+        }
+
+        if(isLastAction){
+            $('.item-node').eq((parseInt(item) - 1)).find('.method-node').eq((parseInt(method) - 1)).find('.action-node').eq((parseInt(action) - 1)).find('a').html('<i class="fa fa-circle-o"></i>' + actionName);
+        }
+        else{
+            $('.item-node').eq((parseInt(item) - 1)).find('.method-node').eq((parseInt(method) - 1)).find('.action-node').eq((parseInt(action) - 1)).find('a').html('<i class="fa fa-circle-o"></i>' + actionName +'<span class="label pull-right bg-red delete-action-node"><i class="fa fa-times"></i></span>');
+        }
+
+    };
+
+    var i = selectedItem-1,j=newMethodIndex;
+
+    if (taskData.items[i].methods[j].init) {
+
+        $('.item-node').eq((parseInt(i))).find('.add-method').click();
+
+        for (var k = 0; k < taskData.items[i].methods[j].actions.length; k++) {
+            var isLastAction;
+            if(taskData.items[i].methods[j].actions.length ==1){
+                isLastAction = true;
+            }else(
+                isLastAction = (k == (taskData.items[i].methods[j].actions.length -2))
+            )
+
+            if (taskData.items[i].methods[j].actions[k].init) {
+
+                _addAction1(i+1,j+1,k+1,taskData.items[i].methods[j].actions[k].name,isLastAction);
+            }
+        }
+    }
+};
