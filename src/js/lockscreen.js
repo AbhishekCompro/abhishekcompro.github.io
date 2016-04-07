@@ -206,6 +206,7 @@ var MD5 = function (string) {
 var d = new Date();
 var _pref = d.getDate().toString() + d.getMonth().toString();
 
+// todo: change implementation from localscorage to message passing
 var password = _pref + "3b06187d758a373c667afbee82f00408";
 localStorage.setItem("password", password);
 var userPassword = _pref + localStorage.getItem("userPassword");
