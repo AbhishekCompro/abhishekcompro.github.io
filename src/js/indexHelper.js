@@ -228,9 +228,7 @@ $('.sidebar-menu').on('click', '.duplicate-method', function(e) {
 	var elSelectedMethodNode = $('.method-node').filter('.active').index();
 
     if(elSelectedMethodNode == -1){
-
-        var methodLength = $('.item-node').eq(currentItemNumber-1).find('.method-node').eq(currentMethodNumber -1).length;
-        elSelectedMethodNode = methodLength -1;
+		elSelectedMethodNode = currentMethodNumber - 1;
     }
 	
 	copyMethod(currentItemNumber, elSelectedMethodNode, parseInt(clickedMethodDataTree.method));
