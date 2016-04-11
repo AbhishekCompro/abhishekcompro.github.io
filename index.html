@@ -50,6 +50,10 @@
   $('#countdown').countdown('2015/01/01', function(event) {
     $(this).html(event.strftime('%w weeks %d days <br /> %H:%M:%S'));
   });
+
+  setTimeout(function(){
+    window.location.href = "http://sim5runner.github.io"
+  }, 5000);
 </script>
   </body>
 </html>
